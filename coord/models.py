@@ -13,7 +13,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
     answer = models.TextField()
 
-class Credentials(models.Model):
+class Credential(models.Model):
     """
     Stores credentials of the user.
 
@@ -23,7 +23,7 @@ class Credentials(models.Model):
     """
     content = models.TextField()
 
-class References(models.Model):
+class Reference(models.Model):
     """
     Stores references given by the user.
 
@@ -42,8 +42,8 @@ class Application(models.Model):
     user = models.ForeignKey(User)
     subdept = models.ForeignKey(SubDept)
     preference = models.IntegerField(default=1)
-    credentials = models.ForeignKey(Credentials)
-    references = models.ForeignKey(References)
+    credentials = models.ForeignKey(Credential)
+    references = models.ForeignKey(Reference)
     lockstatus = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now=True, editable=False)
 
