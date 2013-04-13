@@ -4,7 +4,7 @@
 <form action="{{site_url}}account/login/" method="POST">
         {%csrf_token%}
         {{ form.as_table }}
-        <a href="{{site_url}}{{subdept.id}}/">View Questions</a>
+        <a href="{{site_url}}coord/application/{{form.id}}/">View Questions</a>
       </form>
 
 </html>

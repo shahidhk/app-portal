@@ -9,6 +9,11 @@ from account.models import Announcement
 from account.forms import *
 
 def home(request):
+    """
+        This view handles the landing page for the Application portal.
+        The page displays the announcements and the login form.
+        Link to registration page for coordinators is also included here.
+    """
     if request.user.is_authenticated():
         userprofile = request.user.get_profile()
         if userprofile.is_core_of:

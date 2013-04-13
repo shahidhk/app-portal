@@ -10,6 +10,9 @@ class SubDept(models.Model):
     dept = models.CharField(max_length = 40, choices = DEPT_CHOICES)
     name = models.CharField(max_length = 40)
 
+    def __unicode__(self):
+        return '%s' % (self.name)    
+
 class Question(models.Model):
     """
       Each Sub-department has specific questionnaire. This model is for storing the questions and
@@ -18,3 +21,6 @@ class Question(models.Model):
     """
     subdept = models.ForeignKey(SubDept)
     question = models.TextField()
+
+    def __unicode__(self):
+        return '%s' % (self.question) 

@@ -1,0 +1,13 @@
+<html>
+{% if editted %}
+Changes saved Successfully!
+<a href="{{site_url}}">Home</a>
+{% else %}
+<h3>Edit Profile</h3>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{ edit_form.as_table }}
+        <input type="submit" value="Edit"/>
+      </form>
+{% endif %}
+</html>
