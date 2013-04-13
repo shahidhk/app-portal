@@ -34,8 +34,22 @@ def core_dashboard(request,username=None):
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
-def questions_general(request):
-    pass
+def questions_edit(request,username=None,subdept_id=None,q_id=None):
+    """
+    Working on this.
+
+    This loads up question instance,
+    checks if the owner of that question is trying to edit
+    it and allows him to do so.
+    """
+    question=Question.objects.get(id=q_id)
+    if (question.subdept.id == subdept_id):
+        qedit=QuestionForm(instance=question)
+        if request.method=="POST":
+            q=QuestionForm(request.POST)
+            q.save()
+    return render_to_response('core/edit_q.html',locals())
+
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
@@ -49,7 +63,6 @@ def questions(request,username=None,subdept_id=None):
     to all subdepts under a Dept.
     """
     questions = Question.objects.filter(subdept__pk=subdept_id)
-    print "here", questions
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=5)
     if request.method == 'POST':
         index=0
