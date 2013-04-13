@@ -1,14 +1,43 @@
 <html>
-{% if invalid_login %}
-<font clor="red">
-Invalid Login!
-</font>
-{% endif %}
-<br/>
-<h3>Login</h3>
-      <form action="{{site_url}}account/login/" method="POST">
-        {%csrf_token%}
-        {{ login_form.as_table }}
-        <input type="submit" value="Login"/>
-      </form>
+<head>
+	<link rel="stylesheet" href="{{site_url}}static/css/bootstrap.min.css"  />
+	<link rel="stylesheet" href="{{site_url}}static/css/style.css"  />
+</head>
+<body>
+	<div id="wrapper" class="">
+    	<div id="header" class="navbar navbar-inverse navbar-static-top">
+        	<div class="navbar-inner">
+            	<div class="container">
+                	<a class="brand" href="#">Shaastra 2014 || Appplication Portal</a>
+                    <div id="links" class="pull-right nav-collapse collapse">
+                    	<ul class="nav">
+                        	<li class="active"><a href="#">Home</a></li>
+                            <li><a href="{{site_url}}account/register">Register</a></li>
+                        </ul> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="container">
+        	<div class="row-fluid">     
+            	<div class="span8 well">
+               		<h4>Instructions and Regulations</h4>
+                </div>
+                <div class="span4 well" id="login">
+                    {% if invalid_login %}
+						<font clor="red">
+							Invalid Login!
+						</font>
+					{% endif %}
+					<h3>Login</h3>
+                    <form action="{{site_url}}account/login/" method="POST" class="">
+                      {%csrf_token%}
+                      {{ login_form.as_table }}
+                      <input type="submit" value="Login" class="btn btn-primary"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
