@@ -29,3 +29,7 @@ class SubDeptForm(ModelForm):
         model=SubDept
         exclude=('dept')
 
+    def __init__(self, *arg, **kwarg):
+        super(SubDeptForm, self).__init__(*arg, **kwarg)
+        self.empty_permitted = False
+
