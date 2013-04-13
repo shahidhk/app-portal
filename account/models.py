@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     is_core_of  = models.CharField(max_length = 40, choices = DEPT_CHOICES, null = True)
     cgpa        = models.FloatField()
 
-    def isCore(self):
+    def CoreSubDepts(self):
         if self.is_core_of is NULL:
             return False
         else:

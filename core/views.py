@@ -18,7 +18,7 @@ def core_dashboard(request):
     TODO:
     Add is_core decorator
     """
-    #subdepts=request.user.get_profile().isCore()
+    #subdepts=request.user.get_profile().CoreSubDepts()
     displaydict={}
     #displaydict['subdepts']=subdepts
     return render_to_response("core.html",locals())
@@ -37,10 +37,23 @@ def questions(request,subdept=None):
 
 
 def departments(request):
-    pass
+    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=5)
+    if request.method == 'POST':
+        subdeptformset=SubdeptFormset(request.POST)
+        if subdeptformset.is_valid():
+            for subdeptform in subdeptformset:
+                subdept=subdeptform.save(commit=False)
+                subdept.dept=request.user.get_profile.is_core_of
+                subdept.save()
+    subdeptformset = SubdeptFormset(queryset=Subdept.objects.none())
+    return render_to_response("subdepts.html", locals())
 
-def submissions(request):
-    pass
+def submissions(request,subdept=None):
+    apps = Application.objects.filter(subdept=subdept)
+    return render_to_response("submissions.html",locals())
 
-def applicants(request):
-    pass
+def applicants(request,subdept=None):
+    apps = Application.objects.filter(subdept=subdept)
+    applicants = [app.user for app in apps]
+    return render_to_response("applicants.html",locals())
+
