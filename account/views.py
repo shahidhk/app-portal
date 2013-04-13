@@ -14,7 +14,7 @@ def login(request):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         user = authenticate(username=username, password=password)
-        if user is not None and user.is_active:
+        if user is not None and user.is_active and not user.is_superuser:
             auth_login(request, user)
             nextURL = request.GET.get('next','')
             if nextURL != '':
@@ -33,9 +33,27 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
-      return HttpResponse("got")
+        register_form = RegistrationForm(request.POST)
+        if register_form.is_valid():
+            data = register_form.cleaned_data
+            new_user = User(first_name = data['first_name'], last_name  = data['last_name'],
+                            username   = data['rollno'], email = data['email'])
+            new_user.set_password(data['password'])
+            new_user.is_active = True
+            new_user.save()
+            new_profile = UserProfile(
+                user  = new_user,
+                nick  = data['nick'],
+                room_no  = data['room_no'],
+                hostel  = data['hostel'],
+                cgpa  = data['cgpa'],
+                ph_no = data['ph_no'],
+                )
+            new_profile.save()
+            registered = True
     else:
-      return HttpResponseRedirect('/')
+        register_form = RegistrationForm()
+    return render_to_response('register.html', locals(), context_instance=RequestContext(request))
 
 def logout(request):
     if request.user.is_authenticated():
