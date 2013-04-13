@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from django.conf.urls import patterns, include, url
 from account.views import *
 
