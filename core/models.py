@@ -6,7 +6,7 @@ class SubDept(models.Model):
       Each department under Shaastra has sub-departments.
       Example: Design is a Department whereas Graphic Design, Photography etc are sub-departments
     """
-    subdept = models.CharField(max_length = 40, choices = DEPT_CHOICES)
+    dept = models.CharField(max_length = 40, choices = DEPT_CHOICES)
     name = models.CharField(max_length = 40)
 
 class Question(models.Model):
