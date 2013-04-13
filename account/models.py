@@ -13,6 +13,10 @@ DEPT_CHOICES = (
     )
 
 class UserProfile(models.Model):
+    """
+    Contains details of every user
+    
+    """
     user        = models.ForeignKey(User, unique=True)
     nick        = models.CharField(max_length = 20, blank = True)
     room_no     = models.CharField(max_length = 5, blank = False, null = False)

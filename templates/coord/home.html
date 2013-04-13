@@ -1,0 +1,10 @@
+<html>
+<a href = "{{site_url}}account/logout">Logout</a>
+<a href = "{{site_url}}account/editprofile">Edit Profile</a>
+<form action="{{site_url}}account/login/" method="POST">
+        {%csrf_token%}
+        {{ form.as_table }}
+        <a href="{{site_url}}{{subdept.id}}/">View Questions</a>
+      </form>
+
+</html>
