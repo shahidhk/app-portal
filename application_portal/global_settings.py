@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -134,3 +137,5 @@ LOGGING = {
     }
 }
 
+RECAPTCHA_PUBLIC_KEY = '6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn'
+RECAPTCHA_PRIVATE_KEY = '6Lf1ktUSAAAAANLvSSLPiSpgocDrjyK9ApPUvcaF'

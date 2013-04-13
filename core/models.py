@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from account.models import DEPT_CHOICES
 

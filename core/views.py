@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # ShaastraWebOps
 
 from django.shortcuts import render_to_response, redirect, HttpResponseRedirect
