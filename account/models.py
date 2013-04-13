@@ -28,3 +28,5 @@ class Announcement(models.Model):
     """
     message     = models.TextField()
     timestamp   = models.TimeField(auto_now = True, editable = False)
+
+

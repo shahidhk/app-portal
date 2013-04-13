@@ -1,0 +1,19 @@
+<html>
+{% if invalid_login %}
+<font clor="red">
+Invalid Login!
+</font>
+{% endif %}
+<br/>
+{% if registered %}
+Registered Successfully!
+<a href="{{site_url}}">Proceed to Login</a>
+{% else %}
+<h3>Register</h3>
+      <form action="" method="POST">
+        {%csrf_token%}
+        {{ register_form.as_table }}
+        <input type="submit" value="Register"/>
+      </form>
+{% endif %}
+</html>
