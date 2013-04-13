@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'application_portal.views.home', name='home'),
     url(r'^dashboard/', 'core.views.core_dashboard', name='core_home'),
-
+    url(r'^questions/','core.views.questions',name='core_questions'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
