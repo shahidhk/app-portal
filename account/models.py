@@ -1,3 +1,25 @@
-from django.db import models
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-# Create your models here.
+from django.db import models
+from django.contrib.auth.models import User
+
+HOSTEL_CHOICES = (
+    ('Alaknanda','Alaknanda'),
+)
+
+DEPT_CHOICES = (
+    ('Events','Events'),
+    )
+
+class UserProfile(models.Model):
+    user        = models.ForeignKey(User, unique=True)
+    nick        = models.CharField(max_length = 20, blank = True)
+    room_no     = models.CharField(max_length = 5, blank = False, null = False)
+    hostel      = models.CharField(choices = HOSTEL_CHOICES, blank = False, null = False)
+    ph_no       = models.CharField(max_length = 15, unique = True, blank = False, null = False)
+    is_core_of  = models.CharField(choices = DEPT_CHOICES, null = True)
+    cgpa        = models.FloatField()
+    
+    
+    
