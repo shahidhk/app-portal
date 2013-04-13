@@ -27,3 +27,10 @@ class UserProfile(models.Model):
         else:
             return SubDept.objects.filter(dept=is_core_of)
 
+class Announcement(models.Model):
+    """
+      Stores announcements that will be displayed in the login screen.
+      This model objects will be handled from the django admin site.
+    """
+    message     = models.TextField()
+    timestamp   = models.TimeField(auto_now = True, editable = False)
