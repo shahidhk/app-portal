@@ -5,13 +5,13 @@ class AnswerAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Answer, AnswerAdmin)
 
-class CredentialsAdmin(admin.ModelAdmin):
+class CredentialAdmin(admin.ModelAdmin):
     pass
-admin.site.register(Credentials, CredentialsAdmin)
+admin.site.register(Credential, CredentialAdmin)
 
 class ReferenceAdmin(admin.ModelAdmin):
     pass
-admin.site.register(References, ReferenceAdmin)
+admin.site.register(Reference, ReferenceAdmin)
 
 class ApplicationAdmin(admin.ModelAdmin):
     pass
