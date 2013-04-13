@@ -7,17 +7,18 @@ from django.shortcuts import render_to_response, redirect, HttpResponseRedirect
 from django.forms.models import modelformset_factory,inlineformset_factory
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 from core.models import *
 from coord.models import *
 from account.models import *
 from core.forms import *
 
-
 def urlhandler(request):
     return redirect('core.views.core_dashboard',username=request.user)
 
 @login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def core_dashboard(request,username=None):
     """
     Displays the default dashboard of the core.
@@ -30,9 +31,13 @@ def core_dashboard(request,username=None):
     print subdepts
     return render_to_response("core.html",locals())
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def questions_general(request):
     pass
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def questions(request,username=None,subdept=None):
     """
     Add multiple questions to the application
@@ -55,7 +60,8 @@ def questions(request,username=None,subdept=None):
     questionformset = QuestionFormset(queryset=Question.objects.none())
     return render_to_response("questions.html", locals())
 
-
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def subdepartments(request,username=None):
     """
     Add Subdepts to a Dept
@@ -73,6 +79,8 @@ def subdepartments(request,username=None):
     subdeptformset = SubdeptFormset(queryset=SubDept.objects.none())
     return render_to_response("subdepts.html", locals())
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def submissions(request,username=None,subdept=None):
     """
     Portal to access all submissions
@@ -81,6 +89,8 @@ def submissions(request,username=None,subdept=None):
     apps = Application.objects.filter(subdept=subdept)
     return render_to_response("submissions.html",locals())
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def applicants(request,username=None,subdept=None):
     """
     Portal to view details about all applicants
