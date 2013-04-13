@@ -24,6 +24,14 @@ def core_dashboard(request):
     return render_to_response("core.html",locals())
 
 def questions(request,subdept=None):
+    """
+    Add multiple questions to the application
+    questionairre of a particualar SubDept.
+
+    TODO:
+    Fucntionality of adding common questions
+    to all subdepts under a Dept.
+    """
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=5)
     if request.method == 'POST':
         questionformset=QuestionFormset(request.POST)
@@ -36,7 +44,10 @@ def questions(request,subdept=None):
     return render_to_response("questions.html", locals())
 
 
-def departments(request):
+def subdepartments(request):
+    """
+    Add Subdepts to a Dept
+    """
     SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=5)
     if request.method == 'POST':
         subdeptformset=SubdeptFormset(request.POST)
@@ -49,10 +60,18 @@ def departments(request):
     return render_to_response("subdepts.html", locals())
 
 def submissions(request,subdept=None):
+    """
+    Portal to access all submissions
+    for a partiicualar subdept.
+    """
     apps = Application.objects.filter(subdept=subdept)
     return render_to_response("submissions.html",locals())
 
 def applicants(request,subdept=None):
+    """
+    Portal to view details about all applicants
+    for a subdept.
+    """
     apps = Application.objects.filter(subdept=subdept)
     applicants = [app.user for app in apps]
     return render_to_response("applicants.html",locals())
