@@ -17,6 +17,10 @@ class QuestionForm(ModelForm):
         model=Question
         exclude=('subdept')
 
+    def __init__(self, *arg, **kwarg):
+        super(QuestionForm, self).__init__(*arg, **kwarg)
+        self.empty_permitted = False
+
 class SubDeptForm(ModelForm):
     """
     Form that allows adding subdepts.

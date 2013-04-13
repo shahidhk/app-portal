@@ -25,11 +25,13 @@ def core_dashboard(request,username=None):
     TODO:
     Add is_core decorator
     """
-    #subdepts=request.user.get_profile().CoreSubDepts()
-    #print subdepts
-    displaydict={}
-    #displaydict['subdepts']=subdepts
+    user = request.user
+    subdepts = SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
+    print subdepts
     return render_to_response("core.html",locals())
+
+def questions_general(request):
+    pass
 
 def questions(request,username=None,subdept=None):
     """
@@ -42,11 +44,12 @@ def questions(request,username=None,subdept=None):
     """
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=5)
     if request.method == 'POST':
+        print QuestionFormset(request.POST)
         questionformset=QuestionFormset(request.POST)
-        if questionformset.is_valid():
-            for questionform in questionformset:
+        for questionform in questionformset:
+            if questionform.is_valid():
                 question=questionform.save(commit=False)
-                question.subdept=subdept
+                question.subdept=SubDept.objects.get(name=subdept)
                 question.save()
     questionformset = QuestionFormset(queryset=Question.objects.none())
     return render_to_response("questions.html", locals())

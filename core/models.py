@@ -12,6 +12,9 @@ class SubDept(models.Model):
     dept = models.CharField(max_length = 40, choices = DEPT_CHOICES)
     name = models.CharField(max_length = 40)
 
+    def __str__(self):
+        return self.name
+
 class Question(models.Model):
     """
       Each Sub-department has specific questionnaire. This model is for storing the questions and
