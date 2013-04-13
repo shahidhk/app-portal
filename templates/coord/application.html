@@ -1,0 +1,14 @@
+<html>
+    <table>
+        {%csrf_token%}
+        {{ app.as_table }}
+        {% for q,f in zipped %}
+            <p>{{q.question}}</p>
+            {%csrf_token%}
+            {{f.as_table}}
+        {% endfor %}
+        <input type="submit" value="Submit"/>
+      </table>
+
+
+</html>

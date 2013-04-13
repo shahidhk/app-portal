@@ -1,4 +1,5 @@
-# ShaastraWebOps
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -9,7 +10,7 @@ class Answer(models.Model):
     """
     Stores a textfield answer to each question.
     """
-    user = models.ForeignKey(User)
+    #user = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     answer = models.TextField()
 
@@ -41,6 +42,7 @@ class Application(models.Model):
     """
     user = models.ForeignKey(User)
     subdept = models.ForeignKey(SubDept)
+    answers = models.ManyToManyField(Answer)
     preference = models.IntegerField(default=1)
     credentials = models.ForeignKey(Credential)
     references = models.ForeignKey(Reference)
