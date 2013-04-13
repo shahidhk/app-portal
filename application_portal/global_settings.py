@@ -33,6 +33,8 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+SITE_URL = "http://127.0.0.1:8000/"
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
@@ -69,6 +71,18 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
+    "application_portal.context_processors.site_url",
+)
+
+AUTH_PROFILE_MODULE = 'account.UserProfile'
 
 ROOT_URLCONF = 'application_portal.urls'
 
@@ -119,3 +133,4 @@ LOGGING = {
         },
     }
 }
+

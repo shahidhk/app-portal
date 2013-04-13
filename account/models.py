@@ -21,5 +21,10 @@ class UserProfile(models.Model):
     is_core_of  = models.CharField(max_length = 40, choices = DEPT_CHOICES, null = True)
     cgpa        = models.FloatField()
     
-    
-    
+class Announcement(models.Model):
+    """
+      Stores announcements that will be displayed in the login screen.
+      This model objects will be handled from the django admin site.
+    """
+    message     = models.TextField()
+    timestamp   = models.TimeField(auto_now = True, editable = False)

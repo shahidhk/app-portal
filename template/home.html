@@ -1,0 +1,14 @@
+<html>
+{% if invalid_login %}
+<font clor="red">
+Invalid Login!
+</font>
+{% endif %}
+<br/>
+<h3>Login</h3>
+      <form action="{{site_url}}account/login/" method="POST">
+        {%csrf_token%}
+        {{ login_form.as_table }}
+        <input type="submit" value="Login"/>
+      </form>
+</html>
