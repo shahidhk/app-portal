@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from core.models import *
 
+
 HOSTEL_CHOICES = (
     ('Alaknanda','Alaknanda'),
 )
@@ -22,10 +23,11 @@ class UserProfile(models.Model):
     cgpa        = models.FloatField()
 
     def CoreSubDepts(self):
-        if self.is_core_of is NULL:
+        if self.is_core_of is '':
             return False
         else:
-            return SubDept.objects.filter(dept=is_core_of)
+          pass
+          #return SubDept.objects.filter(dept=is_core_of)
 
 class Announcement(models.Model):
     """

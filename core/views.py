@@ -23,6 +23,7 @@ def core_dashboard(request,username=None):
     Add is_core decorator
     """
     #subdepts=request.user.get_profile().CoreSubDepts()
+    #print subdepts
     displaydict={}
     #displaydict['subdepts']=subdepts
     return render_to_response("core.html",locals())
