@@ -1,9 +1,13 @@
-Works!
+{% if index %}
+Thanks! {{index}} questions have been saved.
+{% endif %}
 
 <br>
-
+<form action='' method="POST">
+{{ questionformset.management_form }}
 {% for form in questionformset %}
 {{form.as_table}}<br>
 {% endfor %}
-
+<input type="submit">
+</form>
 :D

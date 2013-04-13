@@ -44,13 +44,14 @@ def questions(request,username=None,subdept=None):
     """
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=5)
     if request.method == 'POST':
-        print QuestionFormset(request.POST)
+        index=0
         questionformset=QuestionFormset(request.POST)
         for questionform in questionformset:
             if questionform.is_valid():
                 question=questionform.save(commit=False)
                 question.subdept=SubDept.objects.get(name=subdept)
                 question.save()
+                index+=1
     questionformset = QuestionFormset(queryset=Question.objects.none())
     return render_to_response("questions.html", locals())
 
@@ -59,15 +60,17 @@ def subdepartments(request,username=None):
     """
     Add Subdepts to a Dept
     """
-    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=5)
+    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=3)
     if request.method == 'POST':
+        index=0
         subdeptformset=SubdeptFormset(request.POST)
-        if subdeptformset.is_valid():
-            for subdeptform in subdeptformset:
+        for subdeptform in subdeptformset:
+            if subdeptform.is_valid():
                 subdept=subdeptform.save(commit=False)
-                subdept.dept=request.user.get_profile.is_core_of
+                subdept.dept=request.user.get_profile().is_core_of
                 subdept.save()
-    subdeptformset = SubdeptFormset(queryset=Subdept.objects.none())
+                index+=1
+    subdeptformset = SubdeptFormset(queryset=SubDept.objects.none())
     return render_to_response("subdepts.html", locals())
 
 def submissions(request,username=None,subdept=None):

@@ -1,1 +1,7 @@
-Works!
+Hey!
+<br>
+{% for subdept in subdepts %}
+<a href="{% url core.views.questions username=user subdept=subdept %}"> Add Questions for {{subdept}}</a>
+{% endfor %}
+
+<a href="{% url core.views.subdepartments username=user %}"> Add a new subdepartment </a>
