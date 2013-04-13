@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from core.models import *
 from coord.models import *
 from account.models import *
-from django import form
+#from django import form
 
 class QuestionForm(ModelForm):
     """

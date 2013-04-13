@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^account/', include('account.urls')),
     # Examples:
+    url(r'^core/', include('core.urls')),
     url(r'^$', 'application_portal.views.home', name='home'),
     # url(r'^application_portal/', include('application_portal.foo.urls')),
 
