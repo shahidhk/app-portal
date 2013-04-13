@@ -10,8 +10,12 @@ from coord.models import *
 from account.models import *
 from core.forms import *
 
-#@login_required
-def core_dashboard(request):
+
+def urlhandler(request):
+    return redirect('core.views.core_dashboard',username=request.user)
+
+@login_required
+def core_dashboard(request,username=None):
     """
     Displays the default dashboard of the core.
 
@@ -23,7 +27,7 @@ def core_dashboard(request):
     #displaydict['subdepts']=subdepts
     return render_to_response("core.html",locals())
 
-def questions(request,subdept=None):
+def questions(request,username=None,subdept=None):
     """
     Add multiple questions to the application
     questionairre of a particualar SubDept.
@@ -44,7 +48,7 @@ def questions(request,subdept=None):
     return render_to_response("questions.html", locals())
 
 
-def subdepartments(request):
+def subdepartments(request,username=None):
     """
     Add Subdepts to a Dept
     """
@@ -59,7 +63,7 @@ def subdepartments(request):
     subdeptformset = SubdeptFormset(queryset=Subdept.objects.none())
     return render_to_response("subdepts.html", locals())
 
-def submissions(request,subdept=None):
+def submissions(request,username=None,subdept=None):
     """
     Portal to access all submissions
     for a partiicualar subdept.
@@ -67,7 +71,7 @@ def submissions(request,subdept=None):
     apps = Application.objects.filter(subdept=subdept)
     return render_to_response("submissions.html",locals())
 
-def applicants(request,subdept=None):
+def applicants(request,username=None,subdept=None):
     """
     Portal to view details about all applicants
     for a subdept.
