@@ -21,13 +21,12 @@
         <div id="content" class="container">
         	<div class="row-fluid">     
             	<div class="span8 well">
-               		<h4>Instructions and Regulations</h4>
+                	<h4>Announcemnents</h4>
+               		<h4>Instructions</h4>
                 </div>
                 <div class="span4 well" id="login">
                     {% if invalid_login %}
-						<font clor="red">
-							Invalid Login!
-						</font>
+						<span style="color:#9d261d">Invalid Login!</span>
 					{% endif %}
 					<h3>Login</h3>
                     <form action="{{site_url}}account/login/" method="POST" class="">
