@@ -5,20 +5,6 @@ from django.contrib.auth.models import User
 from account.models import DEPT_CHOICES
 from core.models import SubDept, Question
 
-class Application(models.Model):
-    """
-    Stores each application made by
-    aspiring coords with keys to
-    credentials and references.
-    """
-    user = models.ForeignKey(User)
-    subdept = models.ForeignKey(SubDept)
-    preference = models.IntegerField(default=1)
-    credentials = models.ForeignKey(Credential)
-    references = models.ForeignKey(References)
-    lockstatus = models.BooleanField(defaul=False)
-    timestamp = models.DateTimeField(auto_now=True, editable=False)
-
 class Answer(models.Model):
     """
     Stores a textfield answer to each question.
@@ -46,3 +32,18 @@ class References(models.Model):
     references
     """
     content = models.TextField()
+
+class Application(models.Model):
+    """
+    Stores each application made by
+    aspiring coords with keys to
+    credentials and references.
+    """
+    user = models.ForeignKey(User)
+    subdept = models.ForeignKey(SubDept)
+    preference = models.IntegerField(default=1)
+    credentials = models.ForeignKey(Credentials)
+    references = models.ForeignKey(References)
+    lockstatus = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now=True, editable=False)
+

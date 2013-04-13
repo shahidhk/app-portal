@@ -1,5 +1,5 @@
 from django.db import models
-from account import DEPT_CHOICES
+from account.models import DEPT_CHOICES
 
 class SubDept(models.Model):
     """
