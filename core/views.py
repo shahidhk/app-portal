@@ -1,20 +1,24 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # ShaastraWebOps
 
 from django.shortcuts import render_to_response, redirect, HttpResponseRedirect
 from django.forms.models import modelformset_factory,inlineformset_factory
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 from core.models import *
 from coord.models import *
 from account.models import *
 from core.forms import *
 
-
 def urlhandler(request):
     return redirect('core.views.core_dashboard',username=request.user)
 
 @login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def core_dashboard(request,username=None):
     """
     Displays the default dashboard of the core.
@@ -22,12 +26,18 @@ def core_dashboard(request,username=None):
     TODO:
     Add is_core decorator
     """
-    #subdepts=request.user.get_profile().CoreSubDepts()
-    #print subdepts
-    displaydict={}
-    #displaydict['subdepts']=subdepts
+    user = request.user
+    subdepts = SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
+    print subdepts
     return render_to_response("core.html",locals())
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def questions_general(request):
+    pass
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def questions(request,username=None,subdept=None):
     """
     Add multiple questions to the application
@@ -39,31 +49,38 @@ def questions(request,username=None,subdept=None):
     """
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=5)
     if request.method == 'POST':
+        index=0
         questionformset=QuestionFormset(request.POST)
-        if questionformset.is_valid():
-            for questionform in questionformset:
+        for questionform in questionformset:
+            if questionform.is_valid():
                 question=questionform.save(commit=False)
-                question.subdept=subdept
+                question.subdept=SubDept.objects.get(name=subdept)
                 question.save()
+                index+=1
     questionformset = QuestionFormset(queryset=Question.objects.none())
     return render_to_response("questions.html", locals())
 
-
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def subdepartments(request,username=None):
     """
     Add Subdepts to a Dept
     """
-    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=5)
+    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=3)
     if request.method == 'POST':
+        index=0
         subdeptformset=SubdeptFormset(request.POST)
-        if subdeptformset.is_valid():
-            for subdeptform in subdeptformset:
+        for subdeptform in subdeptformset:
+            if subdeptform.is_valid():
                 subdept=subdeptform.save(commit=False)
-                subdept.dept=request.user.get_profile.is_core_of
+                subdept.dept=request.user.get_profile().is_core_of
                 subdept.save()
-    subdeptformset = SubdeptFormset(queryset=Subdept.objects.none())
+                index+=1
+    subdeptformset = SubdeptFormset(queryset=SubDept.objects.none())
     return render_to_response("subdepts.html", locals())
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def submissions(request,username=None,subdept=None):
     """
     Portal to access all submissions
@@ -72,6 +89,8 @@ def submissions(request,username=None,subdept=None):
     apps = Application.objects.filter(subdept=subdept)
     return render_to_response("submissions.html",locals())
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def applicants(request,username=None,subdept=None):
     """
     Portal to view details about all applicants

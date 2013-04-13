@@ -15,8 +15,7 @@ DEPT_CHOICES = (
 )
 class UserProfile(models.Model):
     """
-    Contains details of every user
-    
+        Stores the Profile details of the Users (both Coordinators and Cores).
     """
     user        = models.ForeignKey(User, unique=True)
     nick        = models.CharField(max_length = 20, blank = True)

@@ -17,28 +17,28 @@ from coord.forms import *
 def coord_home(request):
     """
     Can edit profile,logout
-    Sees list of sub-departments, submit application, set preference order etc.  
+    Sees list of sub-departments, submit application, set preference order etc.
 
     """
     if request.user.is_authenticated:
         try:
             profile = UserProfile.objects.get(user__id = request.user.id)
             if profile.is_core_of:
-                return HttpResponseRedirect(settings.SITE_URL + "core/") 
+                return HttpResponseRedirect(settings.SITE_URL + "core/")
         except:
             return HttpResponse("Error!")
         if request.method == "POST":
                 form = SelectSubDeptForm(request.POST)
     else:
         return HttpResponseRedirect(settings.SITE_URL)
-    form = SelectSubDeptForm()    
-    return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))    
-    
+    form = SelectSubDeptForm()
+    return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))
+
 
 def application(request, sub_dept_id = 0):
     """
-    Displays questions of the sub-department with id = sub_dept_id            
-    
+    Displays questions of the sub-department with id = sub_dept_id
+
     """
     if request.user.is_authenticated:
         qns = Question.objects.filter(subdept__id = sub_dept_id).order_by('id')
@@ -55,8 +55,8 @@ def application(request, sub_dept_id = 0):
                     answers.append(ans)
                 else:
                     answers.append(' ')
-                n=n+1     
-            """   
+                n=n+1
+            """
             if request.method == 'POST':
                 forms = AnswerFormSet(request.POST,instance = a.answers.objects.all())
                 app = ApplicationForm(request.POST, instance = a)
@@ -64,7 +64,7 @@ def application(request, sub_dept_id = 0):
                     try:
                         app_pref = Application.objects.get(preference = app.preference)
                         if app_pref.id != app.id:
-                            return HttpResponse("You already have this preference number")    
+                            return HttpResponse("You already have this preference number")
                     except:
                         n=0;
                         f = forms.save(commit = false)
@@ -76,7 +76,7 @@ def application(request, sub_dept_id = 0):
             else:
                 forms = AnswerFormSet()
                 app = ApplicationForm()
-        except:    
+        except:
             AnswerFormSet = formset_factory(AnswerForm, extra = number_of_questions)
             if request.method == 'POST':
                 print 'blah'
@@ -84,9 +84,9 @@ def application(request, sub_dept_id = 0):
                 app = ApplicationForm(request.POST)
                 if forms.is_valid and app.is_valid:
                     try:
-                        a = Application.objects.get(preference = app.preference)  
+                        a = Application.objects.get(preference = app.preference)
                         return HttpResponse("You already have this preference number")
-                    except:  
+                    except:
                         n=0;
                         f = forms.save(commit = false)
                         for f in forms:
@@ -98,4 +98,4 @@ def application(request, sub_dept_id = 0):
                 forms = AnswerFormSet()
                 app = ApplicationForm()
         zipped = zip(qns,forms)
-        return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))                    
+        return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from account.models import DEPT_CHOICES
 
@@ -11,7 +14,7 @@ class SubDept(models.Model):
     name = models.CharField(max_length = 40)
 
     def __unicode__(self):
-        return '%s' % (self.name)    
+        return '%s' % (self.name)
 
 class Question(models.Model):
     """
@@ -23,4 +26,4 @@ class Question(models.Model):
     question = models.TextField()
 
     def __unicode__(self):
-        return '%s' % (self.question) 
+        return '%s' % (self.question)
