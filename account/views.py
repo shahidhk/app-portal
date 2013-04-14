@@ -33,7 +33,14 @@ def login(request):
         login_form = LoginForm()
         return render_to_response('index.html', locals(), context_instance=RequestContext(request))
     else:
-      return HttpResponseRedirect('/')
+        if request.user.is_authenticated():
+            if request.user.get_profile().is_core_of:
+                return HttpResponseRedirect(settings.SITE_URL + 'core/')
+            else:
+                return HttpResponseRedirect(settings.SITE_URL + 'coord/')        
+        else:
+            login_form = LoginForm()
+        return render_to_response('login.html', locals(), context_instance=RequestContext(request))
 
 def register(request):
     """

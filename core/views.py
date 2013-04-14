@@ -86,7 +86,12 @@ def submissions(request,username=None,subdept=None):
     Portal to access all submissions
     for a partiicualar subdept.
     """
-    apps = Application.objects.filter(subdept=subdept)
+    if subdept:
+        subdept = SubDept.objects.get(name = subdept)
+        applications = Application.objects.filter(subdept = subdept)
+        answers = [app.answer.all() for app in applications]
+    else:
+        return redirect('core.views.core_dashboard',username=request.user)
     return render_to_response("submissions.html",locals())
 
 @login_required

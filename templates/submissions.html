@@ -1,0 +1,16 @@
+<html>
+<h3>Submissions for {{ subdept.get_full_name }}</h3>
+
+    {% for app in applications %}
+        <p>User: {{app.user}} <br>
+        <p>#: {{app.preference}} <br>
+        <p>Credentials: {{app.credentials.get_full_content}} <br>
+        <p>Ref: {{app.references}} <br>
+        <p>Time: {{app.timestamp}} <br>
+    {% endfor %}
+      <form action="{{site_url}}account/login/" method="POST">
+        {%csrf_token%}
+        {{ login_form.as_table }}
+        <input type="submit" value="Login"/>
+      </form>
+</html>

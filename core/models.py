@@ -11,6 +11,12 @@ class SubDept(models.Model):
     """
     dept = models.CharField(max_length = 40, choices = DEPT_CHOICES)
     name = models.CharField(max_length = 40)
+    
+    def __unicode__(self):
+        return self.name
+
+    def get_full_name(self):
+        return "%s | %s " %(self.dept,self.name)
 
     def __str__(self):
         return self.name
@@ -22,3 +28,10 @@ class Question(models.Model):
     """
     subdept = models.ForeignKey(SubDept)
     question = models.TextField()
+
+    def __unicode__(self):
+        return "%s..." % str(self.question[:10])
+    
+    def get_full_content(self):
+        return str(self.question)
+

@@ -12,9 +12,15 @@ class Answer(models.Model):
     """
     Stores a textfield answer to each question.
     """
-    user = models.ForeignKey(User)
+    user     = models.ForeignKey(User)
     question = models.ForeignKey(Question)
-    answer = models.TextField()
+    answer   = models.TextField()
+
+    def __unicode__(self):
+        return "%s..." % str(self.answer[:10])
+    
+    def get_full_content(self):
+        return str(self.answer)
 
 class Credential(models.Model):
     """
@@ -26,6 +32,12 @@ class Credential(models.Model):
     """
     content = models.TextField()
 
+    def __unicode__(self):
+        return "%s..." % str(self.content[:10])
+    
+    def get_full_content(self):
+        return str(self.content)
+        
 class Reference(models.Model):
     """
     Stores references given by the user.
@@ -35,6 +47,12 @@ class Reference(models.Model):
     references
     """
     content = models.TextField()
+    
+    def __unicode__(self):
+        return "%s..." % str(self.content[:10])
+    
+    def get_full_content(self):
+        return str(self.content)
 
 class Application(models.Model):
     """
@@ -42,11 +60,11 @@ class Application(models.Model):
     aspiring coords with keys to
     credentials and references.
     """
-    user = models.ForeignKey(User)
-    subdept = models.ForeignKey(SubDept)
-    preference = models.IntegerField(default=1)
+    user        = models.ForeignKey(User)
+    subdept     = models.ForeignKey(SubDept)
+    preference  = models.IntegerField(default=1)
     credentials = models.ForeignKey(Credential)
-    references = models.ForeignKey(Reference)
-    lockstatus = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now=True, editable=False)
-
+    references  = models.ForeignKey(Reference)
+    lockstatus  = models.BooleanField(default=False)
+    timestamp   = models.DateTimeField(auto_now=True, editable=False)
+    answer     = models.ManyToManyField(Answer)
