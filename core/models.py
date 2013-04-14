@@ -4,6 +4,7 @@
 from django.db import models
 from account.models import DEPT_CHOICES
 
+
 class SubDept(models.Model):
     """
       Each department under Shaastra has sub-departments.
@@ -28,7 +29,7 @@ class Question(models.Model):
       to which sub-department they are meant for.
 
     """
-    subdept = models.ForeignKey(SubDept)
+    subdept  = models.ForeignKey(SubDept)
     question = models.TextField()
 
     def __unicode__(self):
@@ -36,4 +37,28 @@ class Question(models.Model):
     
     def get_full_content(self):
         return str(self.question)
+
+from coord.models import Answer, Application
+
+class Comments(models.Model):
+    """
+    Stores comments written by Cores about an answer in an application.
+    This helps the core during the interview.
+    """
+    answer  = models.ForeignKey(Answer)
+    comment = models.TextField()
+    
+    def __unicode__(self):
+        return str(self.comment)
+
+class AppComments(models.Model):
+    """
+    Stores comments written by Cores about an application in general.
+    This serves as a useful feedback to the aspiring coordinator who can view this at the end of selection procedure.
+    """
+    app     = models.ForeignKey(Application,unique=True)
+    comment = models.TextField()
+    
+    def __unicode__(self):
+        return str(self.comment)
 

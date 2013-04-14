@@ -42,5 +42,7 @@ class Announcement(models.Model):
     """
     message     = models.TextField()
     timestamp   = models.TimeField(auto_now = True, editable = False)
-
+    
+    def __unicode__(self):
+        return self.    message
 
