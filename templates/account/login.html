@@ -21,15 +21,25 @@
         </div>
         <div id="content" class="container">
         	<div class="row-fluid">     
-                <div class="span12 well" id="register">
+                <div class="span12 well" id="login">
                      {% if invalid_login %}
 						<span style="color:#9d261d">Invalid Login!</span>
 					{% endif %}
-                    <h3>Login</h3>
-                     <form action="" method="POST">
-                            {%csrf_token%}
-                            {{ login_form.as_table }}
-                            <input type="submit" value="Login" class="btn btn-primary"/>
+                   <h4>Login:</h4>
+                    <form action="{{site_url}}accounts/login/" method="POST" class="form span5">
+                        
+                        {% csrf_token %}
+  						<div class="control-group">
+    						<label class="span3 control-label">Roll No</label>
+      						<input type="text" id="id_username" name="username" placeholder="Roll No" class="span8">
+  						</div>
+  						<div class="control-group">
+    						<label class="span3 control-label">Password</label>
+      						<input type="password" id="id_password" name="password" placeholder="Password" class="span8">
+  						</div>
+                         <div class="control-group">
+    						<input id="submit" value="Login" class="btn btn-primary" type="submit">
+  						</div>
                      </form>
                 </div>
             </div>
