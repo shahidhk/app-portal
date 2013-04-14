@@ -29,19 +29,26 @@
                     {% endif %}
                     <form action="" method="POST">
                     {{ appformset.management_form }}
+                    <table>
+                    <thead>
+                        <td>User</td>
+                        <td>Preference</td>
+                        <td>View Application</td>
+                        <td>Timestamp</td>
+                        <td>Rank</td>
+                    </thead>
+                    <tbody>
                     {% for app in app_details %}
-                        <p>User: <a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a><br>
-                        <p>#: {{app.0.preference}} <br>
-                        <p>Credentials: {{app.0.credentials.get_full_content}} <br>
-                        <p>Ref: {{app.0.references.get_full_content}} <br>
-                        <p>Time: {{app.0.timestamp}} <br>
-                        {% for qna in app.1 %}
-                        <p>{{ qna.0.get_full_content }}<br>
-                        <p>{{ qna.1.get_full_content }}<hr>
-                        {% endfor %}
-                        {{ app.2.as_table }}
-                        <hr>
+                        <tr>
+                        <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                        <td>{{app.0.preference}}</td>
+                        <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
+                        <td>{{app.0.timestamp}}</td>
+                        <td>{{ app.2.as_p }}</td>
+                        </tr>
                     {% endfor %}
+                    </tbody>
+                    </table>
                     <input type="submit" value="Submit" class="btn btn-primary"/>
                     </form>
                 </div>
