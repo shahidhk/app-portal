@@ -11,3 +11,5 @@
 #forms ul.errorlist {height:30px;width:500px;float:right;margin-left:-50px;color:#9d261d;font-style:italic} 
 #forms label.recaptcha_input_area_text{float: none;clear: none;display: block;}
 #forms #recaptcha_response_field{ float:none;height:auto;}
+textarea{height:50px;max-width:100%;min-width:100%;font-size:13px;}
+table{font-size:13px;}
