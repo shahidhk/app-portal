@@ -31,6 +31,9 @@ class UserProfile(models.Model):
         else:
           pass
           #return SubDept.objects.filter(dept=is_core_of)
+    
+    def __unicode__(self):
+        return str(self.user.username)
 
 class Announcement(models.Model):
     """

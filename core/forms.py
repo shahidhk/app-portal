@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.forms import ModelForm
+from django import forms
+from django.forms import ModelForm, Form
 from core.models import *
 from coord.models import *
 from account.models import *
-#from django import form
 
 class QuestionForm(ModelForm):
     """
@@ -32,4 +32,12 @@ class SubDeptForm(ModelForm):
     def __init__(self, *arg, **kwarg):
         super(SubDeptForm, self).__init__(*arg, **kwarg)
         self.empty_permitted = False
+
+class SelectAppForm(ModelForm):
+    """
+    Form that allows selecting and giving ranks to the submissions
+    """
+    class Meta:
+        model = Application
+        fields = ('selected',)    
 

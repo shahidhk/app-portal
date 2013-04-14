@@ -65,3 +65,4 @@ class Application(models.Model):
     references  = models.ForeignKey(Reference)
     lockstatus  = models.BooleanField(default=False)
     timestamp   = models.DateTimeField(auto_now=True, editable=False)
+    selected    = models.IntegerField(default=-1) # This field determines if the core has selected the application and the priority assigned

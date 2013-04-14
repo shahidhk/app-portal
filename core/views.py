@@ -3,12 +3,14 @@
 
 # ShaastraWebOps
 
-from django.shortcuts import render_to_response, redirect, HttpResponseRedirect
+from django.shortcuts import render_to_response, redirect, HttpResponseRedirect, HttpResponse
+from django.template.context import Context, RequestContext
 from django.forms.models import modelformset_factory,inlineformset_factory
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.template.defaultfilters import slugify
+from django.forms.formsets import formset_factory
 
 from core.models import *
 from coord.models import *
@@ -30,7 +32,7 @@ def core_dashboard(request,username=None):
     user = request.user
     subdepts = SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
     print subdepts
-    return render_to_response("cores/core.html",locals())
+    return render_to_response("cores/core.html",locals(), context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
@@ -48,7 +50,7 @@ def questions_edit(request,username=None,subdept_id=None,q_id=None):
         if request.method=="POST":
             q=QuestionForm(request.POST)
             q.save()
-    return render_to_response('core/edit_q.html',locals())
+    return render_to_response('core/edit_q.html',locals(), context_instance=RequestContext(request))
 
 
 @login_required
@@ -74,7 +76,7 @@ def questions(request,username=None,subdept_id=None):
                 question.save()
                 index+=1
     questionformset = QuestionFormset(queryset=Question.objects.none())
-    return render_to_response("cores/questions.html", locals())
+    return render_to_response("cores/questions.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
@@ -94,22 +96,36 @@ def subdepartments(request,username=None):
                 subdept.save()
                 index+=1
     subdeptformset = SubdeptFormset(queryset=SubDept.objects.none())
-    return render_to_response("cores/subdepts.html", locals())
+    return render_to_response("cores/subdepts.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
-def submissions(request,username=None,subdept=None):
+def submissions(request,username=None,subdept_id=None):
     """
     Portal to access all submissions
     for a partiicualar subdept.
     """
-    if subdept:
-        subdept = SubDept.objects.get(name = subdept)
+    if subdept_id:
+        AppFormSet = modelformset_factory(Application, form=SelectAppForm)
+        subdept = SubDept.objects.get(id = subdept_id)
         applications = Application.objects.filter(subdept = subdept)
-        answers = [app.answer.all() for app in applications]
+        qna = []
+        for app in applications:
+            answers   = app.answers.all()
+            questions = [ans.question for ans in answers]
+            qna.append(zip(questions,answers))
+        if request.method=="POST":
+            appformset = AppFormSet(request.POST)
+            for appform in appformset:
+                if appform.is_valid():
+                    appform.save()
+            saved = True
+        else:
+            appformset = AppFormSet(queryset=Application.objects.all())
+        app_details = zip(applications,qna,appformset)
     else:
         return redirect('core.views.core_dashboard',username=request.user)
-    return render_to_response("submissions.html",locals())
+    return render_to_response("cores/submissions.html",locals(), context_instance=RequestContext(request))
 
 
 @login_required
@@ -121,5 +137,5 @@ def applicants(request,username=None,subdept=None):
     """
     apps = Application.objects.filter(subdept=subdept)
     applicants = [app.user for app in apps]
-    return render_to_response("cores/applicants.html",locals())
+    return render_to_response("cores/applicants.html",locals(), context_instance=RequestContext(request))
 

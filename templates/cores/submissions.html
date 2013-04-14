@@ -1,0 +1,23 @@
+<html>
+<h3>Submissions for {{ subdept.get_full_name }}</h3>
+    {% if saved %}
+        All changes saved successfully
+    {% endif %}
+    <form action="" method="POST">
+    {{ appformset.management_form }}
+    {% for app in app_details %}
+        <p>User: {{app.0.user}} <br>
+        <p>#: {{app.0.preference}} <br>
+        <p>Credentials: {{app.0.credentials.get_full_content}} <br>
+        <p>Ref: {{app.0.references.get_full_content}} <br>
+        <p>Time: {{app.0.timestamp}} <br>
+        {% for qna in app.1 %}
+        <p>{{ qna.0.get_full_content }}<br>
+        <p>{{ qna.1.get_full_content }}<hr>
+        {% endfor %}
+        {{ app.2.as_table }}
+        <hr>
+    {% endfor %}
+    <input type="submit" value="Submit" />
+    </form>
+</html>

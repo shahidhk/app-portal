@@ -15,6 +15,8 @@ def home(request):
         Link to registration page for coordinators is also included here.
     """
     if request.user.is_authenticated():
+        if request.user.is_superuser:
+            return HttpResponseRedirect(settings.SITE_URL + 'admin/')
         userprofile = request.user.get_profile()
         if userprofile.is_core_of:
            return HttpResponseRedirect(settings.SITE_URL + 'core/')
