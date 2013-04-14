@@ -73,6 +73,22 @@ def questions_delete(request,username=None,subdept_id=None,q_id=None):
     return redirect('core.views.core_dashboard',username=request.user)
 
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def questions_all(request,username=None):
+    subdepts=SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
+    if request.method=="POST":
+        add_to=request.POST.getlist('subdepartments')
+        for x in add_to:
+            question=QuestionForm(request.POST)
+            if question.is_valid:
+                q=question.save(commit=False)
+                q.subdept=SubDept.objects.get(id=x)
+                q.save()
+            else:
+                break
+    q=QuestionForm()
+    return render_to_response("cores/questions_all.html",locals(),context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)

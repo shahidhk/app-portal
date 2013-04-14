@@ -21,6 +21,16 @@ class QuestionForm(ModelForm):
         super(QuestionForm, self).__init__(*arg, **kwarg)
         self.empty_permitted = False
 
+class AllQuestionForm(ModelForm):
+    choices = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
+    class Meta:
+        model=Question
+        exclude=('subdept')
+
+    def __init__(self,*arg,**kwarg):
+        super(AllQuestionForm, self).__init__(*arg,**kwarg)
+        self.empty_permitted = False
+
 class SubDeptForm(ModelForm):
     """
     Form that allows adding subdepts.
@@ -39,7 +49,7 @@ class SelectAppForm(ModelForm):
     """
     class Meta:
         model = Application
-        fields = ('selected',)    
+        fields = ('selected',)
 
 class CommentsForm(forms.ModelForm):
     """

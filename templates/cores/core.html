@@ -9,7 +9,9 @@
         <tr><td>{{dept}}<br><a href="{% url core.views.questions username=user subdept_id=dept.id %}"><small>(Questions)</small></a> <a href="{% url core.views.subdepartments_edit username=user subdept_id=dept.id %}"><small>(Edit)</small></a></td><td><a href="{% url core.views.submissions username=user subdept_id=dept.id %}">View</a></td></tr>
         {% endfor %}
     </table>
-    <div class="span8 offset5">
-    <a class="btn btn-inverse" href="{% url core.views.subdepartments username=user %}"> New Department </a></li>
-    </div>
+    <div class="span8 offset4">
+        <a class="btn btn-info" href="{% url core.views.questions_all username=user %}"> Add questions for multiple departments </a>
+        <br><br>
+        <a class="btn btn-inverse" href="{% url core.views.subdepartments username=user %}"> New Department </a>
+</div>
     {% endblock %}
