@@ -2,6 +2,7 @@ Hey!
 <br>
 {% for dept in subdepts %}
 <a href="{% url core.views.questions username=user subdept_id=dept.id %}">{{dept}}</a>&nbsp;&nbsp;&nbsp;<a href="{% url core.views.submissions username=user subdept_id=dept.id %}">View Submissions</a><br>
+<a href="{% url core.views.subdepartments_edit username=user subdept_id=dept.id %}">Edit this Department</a>
 {% endfor %}
 
 <a href="{% url core.views.subdepartments username=user %}"> Add a new subdepartment </a>
