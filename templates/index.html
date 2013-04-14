@@ -17,13 +17,13 @@
                     	<ul class="nav">
                         	<li class="active"><a href="#">Home</a></li>
                             <li><a href="{{site_url}}accounts/register/">Register</a></li>
-                        </ul> 
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div id="content" class="container">
-        	<div class="row-fluid">     
+        	<div class="row-fluid">
             	<div class="span8 well">
                		<h4>Instructions and Regulations</h4>
                		{% for a in announcements %}
@@ -33,7 +33,7 @@
                 <div class="span4 well" id="login">
                 	<h4>Login:</h4>
                     <form action="{{site_url}}accounts/login/" method="POST" class="form span12">
-                        
+
                         {% csrf_token %}
   						<div class="control-group">
     						<label class="span3 control-label">Roll No</label>
