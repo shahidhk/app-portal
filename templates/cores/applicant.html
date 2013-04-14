@@ -1,0 +1,12 @@
+<html>
+<h3>Details of {{ applicant }}</h3>
+    Applicant Profile Details:<br>
+    {{ applicant_profile }}
+    <br>
+    Submitted Applications:
+    {% for app in applications %}
+        <p>SubDept: {{app.subdept}} <br>
+        <p>#: {{app.preference}} <br>
+        <a href="{% url core.views.applications username=request.user app_id=app.id %}">View Application</a>
+    {% endfor %}
+</html>

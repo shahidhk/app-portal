@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from core.models import *
 
+
 HOSTEL_CHOICES = (
     ('Alaknanda','Alaknanda'),
 )
@@ -14,8 +15,7 @@ DEPT_CHOICES = (
 )
 class UserProfile(models.Model):
     """
-    Contains details of every user
-    
+        Stores the Profile details of the Users (both Coordinators and Cores).
     """
     user        = models.ForeignKey(User, unique=True)
     nick        = models.CharField(max_length = 20, blank = True)
@@ -26,10 +26,14 @@ class UserProfile(models.Model):
     cgpa        = models.FloatField()
 
     def CoreSubDepts(self):
-        if self.is_core_of is NULL:
+        if self.is_core_of is '':
             return False
         else:
-            return SubDept.objects.filter(dept=is_core_of)
+          pass
+          #return SubDept.objects.filter(dept=is_core_of)
+    
+    def __unicode__(self):
+        return str(self.user.username)
 
 class Announcement(models.Model):
     """

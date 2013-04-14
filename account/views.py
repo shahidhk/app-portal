@@ -31,9 +31,16 @@ def login(request):
                 return HttpResponseRedirect(settings.SITE_URL + 'coord/home/')
         invalid_login = True
         login_form = LoginForm()
-        return render_to_response('index.html', locals(), context_instance=RequestContext(request))
+        return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
     else:
-      return HttpResponseRedirect('/')
+        if request.user.is_authenticated():
+            if request.user.get_profile().is_core_of:
+                return HttpResponseRedirect(settings.SITE_URL + 'core/')
+            else:
+                return HttpResponseRedirect(settings.SITE_URL + 'coord/')        
+        else:
+            login_form = LoginForm()
+        return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
 
 def register(request):
     """
@@ -75,7 +82,7 @@ def register(request):
     else:
         captcha_response = ''  # Added so that nothing gets displayed in the template if this variable is not set
         register_form = RegistrationForm()
-    return render_to_response('register.html', locals(), context_instance=RequestContext(request))
+    return render_to_response('account/register.html', locals(), context_instance=RequestContext(request))
 
 
 def logout(request):
@@ -106,5 +113,5 @@ def editprofile(request):
         values = {'first_name': user.first_name,
                   'last_name' : user.last_name,}
         edit_form = EditUserProfileForm(instance = user_profile, initial = values)
-    return render_to_response('editprofile.html', locals(), context_instance=RequestContext(request))
+    return render_to_response('account/editprofile.html', locals(), context_instance=RequestContext(request))
 

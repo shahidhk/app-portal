@@ -1,20 +1,27 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # ShaastraWebOps
 
-from django.shortcuts import render_to_response, redirect, HttpResponseRedirect
+from django.shortcuts import render_to_response, redirect, HttpResponseRedirect, HttpResponse
+from django.template.context import Context, RequestContext
 from django.forms.models import modelformset_factory,inlineformset_factory
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+from django.template.defaultfilters import slugify
+from django.forms.formsets import formset_factory
 
 from core.models import *
 from coord.models import *
 from account.models import *
 from core.forms import *
 
-
 def urlhandler(request):
     return redirect('core.views.core_dashboard',username=request.user)
 
 @login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def core_dashboard(request,username=None):
     """
     Displays the default dashboard of the core.
@@ -22,12 +29,33 @@ def core_dashboard(request,username=None):
     TODO:
     Add is_core decorator
     """
-    #subdepts=request.user.get_profile().CoreSubDepts()
-    displaydict={}
-    #displaydict['subdepts']=subdepts
-    return render_to_response("core.html",locals())
+    user = request.user
+    subdepts = SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
+    print subdepts
+    return render_to_response("cores/core.html",locals(), context_instance=RequestContext(request))
 
-def questions(request,username=None,subdept=None):
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def questions_edit(request,username=None,subdept_id=None,q_id=None):
+    """
+    Working on this.
+
+    This loads up question instance,
+    checks if the owner of that question is trying to edit
+    it and allows him to do so.
+    """
+    question=Question.objects.get(id=q_id)
+    if (question.subdept.id == subdept_id):
+        qedit=QuestionForm(instance=question)
+        if request.method=="POST":
+            q=QuestionForm(request.POST)
+            q.save()
+    return render_to_response('core/edit_q.html',locals(), context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def questions(request,username=None,subdept_id=None):
     """
     Add multiple questions to the application
     questionairre of a particualar SubDept.
@@ -36,47 +64,90 @@ def questions(request,username=None,subdept=None):
     Fucntionality of adding common questions
     to all subdepts under a Dept.
     """
+    questions = Question.objects.filter(subdept__pk=subdept_id)
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=5)
     if request.method == 'POST':
+        index=0
         questionformset=QuestionFormset(request.POST)
-        if questionformset.is_valid():
-            for questionform in questionformset:
+        for questionform in questionformset:
+            if questionform.is_valid():
                 question=questionform.save(commit=False)
-                question.subdept=subdept
+                question.subdept=SubDept.objects.get(pk=subdept_id)
                 question.save()
+                index+=1
     questionformset = QuestionFormset(queryset=Question.objects.none())
-    return render_to_response("questions.html", locals())
+    return render_to_response("cores/questions.html", locals(), context_instance=RequestContext(request))
 
-
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
 def subdepartments(request,username=None):
     """
     Add Subdepts to a Dept
     """
-    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=5)
+    SubdeptFormset = modelformset_factory(SubDept, form=SubDeptForm, extra=3)
     if request.method == 'POST':
+        index=0
         subdeptformset=SubdeptFormset(request.POST)
-        if subdeptformset.is_valid():
-            for subdeptform in subdeptformset:
+        for subdeptform in subdeptformset:
+            if subdeptform.is_valid():
                 subdept=subdeptform.save(commit=False)
-                subdept.dept=request.user.get_profile.is_core_of
-                subdept.save()
-    subdeptformset = SubdeptFormset(queryset=Subdept.objects.none())
-    return render_to_response("subdepts.html", locals())
 
-def submissions(request,username=None,subdept=None):
+                subdept.dept=request.user.get_profile().is_core_of
+                subdept.save()
+                index+=1
+    subdeptformset = SubdeptFormset(queryset=SubDept.objects.none())
+    return render_to_response("cores/subdepts.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def submissions(request,username=None,subdept_id=None):
     """
     Portal to access all submissions
-    for a partiicualar subdept.
+    for a particular subdept.
     """
-    apps = Application.objects.filter(subdept=subdept)
-    return render_to_response("submissions.html",locals())
+    if subdept_id:
+        AppFormSet = modelformset_factory(Application, form=SelectAppForm)
+        subdept = SubDept.objects.get(id = subdept_id)
+        applications = Application.objects.filter(subdept = subdept)
+        qna = []
+        for app in applications:
+            answers   = app.answers.all()
+            questions = [ans.question for ans in answers]
+            qna.append(zip(questions,answers))
+        if request.method=="POST":
+            appformset = AppFormSet(request.POST)
+            for appform in appformset:
+                if appform.is_valid():
+                    appform.save()
+            saved = True
+        else:
+            appformset = AppFormSet(queryset=Application.objects.all())
+        app_details = zip(applications,qna,appformset)
+    else:
+        return redirect('core.views.core_dashboard',username=request.user)
+    return render_to_response("cores/submissions.html",locals(), context_instance=RequestContext(request))
 
-def applicants(request,username=None,subdept=None):
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def applicants(request,username=None,applicant=None):
     """
-    Portal to view details about all applicants
-    for a subdept.
+    Portal to view all details about an applicant.
     """
-    apps = Application.objects.filter(subdept=subdept)
-    applicants = [app.user for app in apps]
-    return render_to_response("applicants.html",locals())
+    applicant = User.objects.get(username=applicant)
+    applicant_profile = applicant.get_profile()
+    applications = Application.objects.filter(user=applicant)
+    return render_to_response("cores/applicant.html",locals(), context_instance=RequestContext(request))
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def applications(request,username=None,app_id=None):
+    """
+    Portal to view the details of a particular application
+    """
+    app = Application.objects.get(id=app_id)
+    answers   = app.answers.all()
+    questions = [ans.question for ans in answers]
+    qna = zip(questions,answers)
+    return render_to_response("cores/application.html",locals(), context_instance=RequestContext(request))
 

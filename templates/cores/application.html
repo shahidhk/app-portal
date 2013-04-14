@@ -1,0 +1,12 @@
+<html>
+<h3>Application for {{app.subdept}} submitted by {{app.user}}</h3>
+    <p>User: {{app.user}} <br>
+    <p>#: {{app.preference}} <br>
+    <p>Credentials: {{app.credentials.get_full_content}} <br>
+    <p>Ref: {{app.references.get_full_content}} <br>
+    <p>Time: {{app.timestamp}} <br>
+    {% for q in qna %}
+    <p>{{ q.0.get_full_content }}<br>
+    <p>{{ q.1.get_full_content }}<hr>
+    {% endfor %}
+</html>

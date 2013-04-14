@@ -2,11 +2,14 @@
 <form action="" method="POST">
     <table>
         {%csrf_token%}
+        {{ forms.management_form}}
         {{ app.as_table }}
-        <!--{% for q,f in zipped %}
-            <p>{{q.question}}</p>
-            {{f.as_table}}
-        {% endfor %} -->
+        {% for q in zipped %}
+            <p>{{q.0.question}}</p>
+            {{q.1}}
+            <!--<p>{{q.question}}</p>
+            {{f.as_table}}-->
+        {% endfor %} 
         <input type="submit" value="Submit"/>
       </table>
 </form>
