@@ -42,12 +42,19 @@ class SelectAppForm(ModelForm):
         fields = ('selected',)    
 
 class CommentsForm(forms.ModelForm):
+    """
+    Form for the core to add comments about a specific answer
+    """
     class Meta:
         model   = Comments
         fields  = ('answer','comment')
         widgets = {'answer': forms.HiddenInput(),}
 
 class AppCommentsForm(forms.ModelForm):
+    """
+    Model Form for the core to add general comment/feedback about the
+    application to the aspiring coordinator.
+    """
     class Meta:
         model   = AppComments
         fields  = ('app','comment')
