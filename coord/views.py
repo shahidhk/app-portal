@@ -43,6 +43,7 @@ def application(request, sub_dept_id = None):
     """
     Displays questions of the sub-department with id = sub_dept_id
 
+    #TODO: Do no accept form if an answer is blank
     """
     subdept = SubDept.objects.get(id = sub_dept_id)
     qns = Question.objects.filter(subdept__id = sub_dept_id).order_by('id')
@@ -88,27 +89,32 @@ def application(request, sub_dept_id = None):
             forms = AnswerFormSet(request.POST)
             app = ApplicationForm(request.POST)
             if forms.is_valid() and app.is_valid():
+                temp = app.save(commit = False)
                 try:
-                    app_pref = Application.objects.get(preference = app.preference)  
+                    app_pref = Application.objects.get(user = request.user, preference = temp.preference)  
                     return HttpResponse("You already have this preference number")
                 except:
                     #app.save() 
                     n=0;
                     forms = forms.save(commit = False)
-                    for f in forms:
-                        f.question = qns[n]
-                        n=n+1
-                        f.save()
+                    
                     ref = Reference(content = app.cleaned_data['references'])
                     ref.save()
                     cred = Credential(content = app.cleaned_data['credentials']) 
                     cred.save()
-                    temp = app.save(commit = False)
                     temp.user = request.user
                     temp.references = ref
                     temp.credentials = cred
                     temp.subdept = subdept 
                     temp.save()
+                    curr = Application.objects.get(id = temp.id)
+                    for f in forms:
+                        f.question = qns[n]
+                        n=n+1
+                        f.save()
+                        ans = Answer.objects.get(id = f.id)                        
+                        curr.answers.add(ans)
+                    curr.save()
         else:  
             forms = AnswerFormSet(queryset = Answer.objects.none())
             app = ApplicationForm()
