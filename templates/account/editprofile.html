@@ -29,7 +29,7 @@
                       <h3>Edit Profile</h3>
                       <form action="" method="POST">
                         {% csrf_token %}
-                        {{ edit_form.as_table }}
+                        <div class="span12">{{ edit_form.as_table }}</div>
                         <input type="submit" value="Edit" class="btn btn-primary"/>
                       </form>
                 </div>
