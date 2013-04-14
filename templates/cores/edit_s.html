@@ -14,7 +14,7 @@
                     <div id="links" class="pull-right nav-collapse collapse">
                     	<ul class="nav">
                         	<li class=""><a href="{{site_url}}">Home</a></li>
-                            <li class="active"><a href="{% url core.views.subdepartments username=user %}"> Add subdepartment </a></li>
+                            <li class=""><a href="{% url core.views.subdepartments username=user %}"> Add subdepartment </a></li>
                             <li class=""><a href="{{site_url}}accounts/logout/"> Logout </a></li>
                         </ul> 
                     </div>
@@ -23,25 +23,14 @@
         </div>
         <div id="content" class="container">
         	<div class="row-fluid">     
-                <div class="span12" id="forms">
-                        {% if index %}
-                        <p>You have successfully created {{index}} new events.</p>
-                        {% endif %}
-                        <h4>Add Sub Department</h4>
-                        <form action='' method="POST">
-                            <div class="span12">
-                                {{subdeptformset.management_form }}
-                                {% for form in subdeptformset %}
-                                {{ form.as_table }}
-                                <br>
-                                {% endfor %}
-                            </div>
-                            <input type="submit" class="btn btn-primary">
-                        </form>
+                <div class="span12" id="core-dashboard">                                             
+                          <form action='' method="POST">
+                          {{subedit.as_table}}
+                          <input type="submit" class="btn btn-primary">
+                          </form>
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
-

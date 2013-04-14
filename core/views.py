@@ -43,8 +43,8 @@ def questions_edit(request,username=None,subdept_id=None,q_id=None):
     checks if the owner of that question is trying to edit
     it and allows him to do so.
     """
+    question=Question.objects.get(id=q_id)
     if (question.subdept.id == int(subdept_id)):
-        question=Question.objects.get(id=q_id)
         if request.method!="POST":
             qedit=QuestionForm(instance=question)
             return render_to_response('cores/edit_q.html',locals(), context_instance=RequestContext(request))
@@ -97,6 +97,26 @@ def subdepartments(request,username=None):
                 index+=1
     subdeptformset = SubdeptFormset(queryset=SubDept.objects.none())
     return render_to_response("cores/subdepts.html", locals(), context_instance=RequestContext(request))
+
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def subdepartments_edit(request,username=None,subdept_id=None):
+    """
+    Working on this.
+
+    This loads up question instance,
+    checks if the owner of that question is trying to edit
+    it and allows him to do so.
+    """
+    subdept=SubDept.objects.get(id=subdept_id)
+    if request.method!="POST":
+        subedit=SubDeptForm(instance=subdept)
+        return render_to_response('cores/edit_s.html',locals(), context_instance=RequestContext(request))
+    else:
+        s=SubDeptForm(request.POST,instance=subdept)
+        s.save()
+    return redirect('core.views.core_dashboard',username=request.user)
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
