@@ -10,7 +10,7 @@
     	<div id="header" class="navbar navbar-inverse navbar-static-top">
         	<div class="navbar-inner">
             	<div class="container">
-                	<a class="brand" href="{{site_url}}">Welcome</a>
+                	<a class="brand" href="{{site_url}}">Shaastra 2014 || Appplication Portal</a>
                     <div id="links" class="pull-right nav-collapse collapse">
                     	<ul class="nav">
                         	<li class=""><a href="{{site_url}}">Home</a></li>
@@ -24,7 +24,8 @@
         <div id="content" class="container">
         	<div class="row-fluid">     
                 <div class="span12" id="core-dashboard">
-                    <div class="span6" id="edit">
+                    <div class="span5" id="edit">
+                    	<h5>Add Questions</h5>
                         <form action='' method="POST">
                               {{ questionformset.management_form }}
                               {% for form in questionformset %}
@@ -33,15 +34,17 @@
                               <input type="submit" class="btn btn-primary">
                         </form>
                     </div>
-                    <div class="span6" id="view">
-                    	<h5>Questions</h5>
+                    <div class="span6 pull-right" id="view">
+                    	<h5>Current Questions</h5>
                         {% if index %}
-                        Thanks! {{index}} questions have been saved.
-                        {% endif %}
-                        {% for q in questions %}
-                        {{q.question}}
-                        <a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a>
-                        {%endfor%}                       
+       					<p>Thanks! {{index}} questions have been saved.</p>
+       					{% endif %}
+                        <table class="table table-bordered table-striped">
+                          {% for q in questions %}
+                          <tr><td class="span11">{{q.question}}</td>
+                          <td class="span1"><a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a></td></tr>
+                          {%endfor%} 
+                        </table>                      
                     </div>
                 </div>
             </div>
