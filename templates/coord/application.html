@@ -1,6 +1,5 @@
 <html>
 <form action="" method="POST">
-    <table>
         {%csrf_token%}
         {{ forms.management_form}}
         {{ app.as_table }}
@@ -11,8 +10,5 @@
             {{f.as_table}}-->
         {% endfor %} 
         <input type="submit" value="Submit"/>
-      </table>
 </form>
-
-
 </html>

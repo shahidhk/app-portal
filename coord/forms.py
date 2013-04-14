@@ -14,11 +14,17 @@ class AnswerForm(forms.ModelForm):
         widgets = {'answer': forms.Textarea(attrs={'cols': 80, 'rows': 20}),}
         
 class ApplicationForm(forms.ModelForm):
+    credentials = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
+    references = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
     class Meta:
-        model   = Application
-        fields  = {'preference','credentials','references'}  
-        widgets = {'credentials': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
-                    'references': forms.Textarea(attrs={'cols': 80, 'rows': 20}),}      
+        model = Application
+        fields = {'preference'}
+        #fields = {'preference','user','subdept','answers'}  
+        """
+        widgets = {'user': forms.HiddenInput(),
+                    'subdept': forms.HiddenInput(),
+                    'answers': forms.HiddenInput(),}   
+        """   
 
 class SelectSubDeptForm(forms.ModelForm):
     name = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.all())

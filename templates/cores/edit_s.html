@@ -1,7 +1,11 @@
 {% extends "cores/base.html" %}
 {% block content %}
-<form action='' method="POST">
-{{subedit.as_table}}
-<input type="submit" class="btn btn-primary">
-</form>
+<div class="span12" id="core-dashboard">
+    <div id="forms">
+        <form action='' method="POST">
+            {{subedit.as_table}}
+            <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
+</div>
 {% endblock %}
