@@ -9,7 +9,7 @@
     	<div id="header" class="navbar navbar-inverse navbar-static-top">
         	<div class="navbar-inner">
             	<div class="container">
-                	<a class="brand" href="{{site_url}}">Welcome</a>
+                	<a class="brand" href="{{site_url}}" style="color:#fff;">Welcome</a>
                     <div id="links" class="pull-right nav-collapse collapse">
                     	<ul class="nav">
                         	<li class="active"><a href="{{site_url}}">Home</a></li>
@@ -24,7 +24,7 @@
         	<div class="row-fluid">     
                 <div class="span12" id="core-dashboard">
                 	<h4>Subdepartments:</h4>
-                	<table class="span8 table table-bordered table-striped">
+                	<table class="span8 table table-bordered table-striped table-hover">
                      {% for dept in subdepts %}
                       <tr><td><a href="{% url core.views.questions username=user subdept_id=dept.id %}">{{dept}}</a></td><td><a href="{% url core.views.questions username=user subdept_id=dept.id %}">Edit/Add Questions</a></td><td><a href="{% url core.views.submissions username=user subdept_id=dept.id %}">View Submissions</a></td></tr>
                       {% endfor %}

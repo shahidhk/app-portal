@@ -39,7 +39,7 @@
                         {% if index %}
        					<p>Thanks! {{index}} questions have been saved.</p>
        					{% endif %}
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped table-hover">
                           {% for q in questions %}
                           <tr><td class="span11">{{q.question}}</td>
                           <td class="span1"><a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a></td></tr>
