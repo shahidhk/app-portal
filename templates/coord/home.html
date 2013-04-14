@@ -1,6 +1,6 @@
 <html>
-<a href = "{{site_url}}account/logout">Logout</a>
-<a href = "{{site_url}}account/editprofile">Edit Profile</a>
+<a href = "{{site_url}}accounts/logout">Logout</a>
+<a href = "{{site_url}}accounts/editprofile">Edit Profile</a>
     <form action="" method="POST">
         {%csrf_token%}
         {{ form.as_table }}
