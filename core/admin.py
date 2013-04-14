@@ -12,3 +12,11 @@ class QuestionAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Question, QuestionAdmin)
 
+class CommentsAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Comments, CommentsAdmin)
+
+class AppCommentsAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(AppComments, AppCommentsAdmin)
+

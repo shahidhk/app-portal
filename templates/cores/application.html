@@ -5,8 +5,15 @@
     <p>Credentials: {{app.credentials.get_full_content}} <br>
     <p>Ref: {{app.references.get_full_content}} <br>
     <p>Time: {{app.timestamp}} <br>
+    <form action="" method="POST">
+    {{appcommentsform.as_table}}<hr>
+    {{ commentsformset.management_form }}
+    
     {% for q in qna %}
     <p>{{ q.0.get_full_content }}<br>
-    <p>{{ q.1.get_full_content }}<hr>
+    <p>{{ q.1.get_full_content }}<br>
+    {{ q.2.as_table }}<hr>
     {% endfor %}
+    <input type="submit" value="save" />
+    </form>
 </html>

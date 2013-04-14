@@ -41,3 +41,15 @@ class SelectAppForm(ModelForm):
         model = Application
         fields = ('selected',)    
 
+class CommentsForm(forms.ModelForm):
+    class Meta:
+        model   = Comments
+        fields  = ('answer','comment')
+        widgets = {'answer': forms.HiddenInput(),}
+
+class AppCommentsForm(forms.ModelForm):
+    class Meta:
+        model   = AppComments
+        fields  = ('app','comment')
+        widgets = {'app': forms.HiddenInput(),}
+

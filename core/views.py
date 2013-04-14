@@ -148,6 +148,21 @@ def applications(request,username=None,app_id=None):
     app = Application.objects.get(id=app_id)
     answers   = app.answers.all()
     questions = [ans.question for ans in answers]
-    qna = zip(questions,answers)
+    comments = Comments.objects.filter(answer__in=answers)
+    CommentsFormSet = modelformset_factory(Comments, form=CommentsForm, extra=0)
+    if request.method == "POST":
+        commentsformset = CommentsFormSet(request.POST)
+        appcommentsform = AppCommentsForm(request.POST,instance=AppComments.objects.get(app=app))
+        if appcommentsform.is_valid():
+            appcommentsform.save()
+        for commentsform in commentsformset:
+            if commentsform.is_valid():
+                data = commentsform.cleaned_data
+                commentsform.save()
+        saved = True
+    else:
+        appcommentsform = AppCommentsForm(instance=AppComments.objects.get(app=app))
+        commentsformset = CommentsFormSet(queryset=comments)
+    qna = zip(questions,answers,commentsformset)
     return render_to_response("cores/application.html",locals(), context_instance=RequestContext(request))
 
