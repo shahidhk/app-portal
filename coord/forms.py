@@ -24,7 +24,7 @@ class SelectSubDeptForm(forms.ModelForm):
     name = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.all())
     class Meta:
         model = SubDept
-        fields = {'name'}
+        exclude = {'dept'}
         
 
 class CredentialsForm(forms.ModelForm):
