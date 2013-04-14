@@ -28,15 +28,16 @@
                 </div>
                 <div class="span4 well" id="login">
                 	<h4>Login:</h4>
-                    <form action="{{site_url}}account/login/" method="POST" class="form span12">
+                    <form action="{{site_url}}accounts/login/" method="POST" class="form span12">
+                        
                         {% csrf_token %}
   						<div class="control-group">
     						<label class="span3 control-label">Roll No</label>
-      						<input type="text" id="roll" placeholder="Roll No" class="span8">
+      						<input type="text" id="id_username" name="username" placeholder="Roll No" class="span8">
   						</div>
   						<div class="control-group">
     						<label class="span3 control-label">Password</label>
-      						<input type="password" id="passwd" placeholder="Password" class="span8">
+      						<input type="password" id="id_password" name="password" placeholder="Password" class="span8">
   						</div>
                          <div class="control-group">
     						<input id="submit" value="Login" class="btn btn-primary" type="submit">
