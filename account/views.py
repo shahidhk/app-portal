@@ -49,17 +49,14 @@ def register(request):
     if request.method == 'POST':
         register_form = RegistrationForm(request.POST)
         captcha_response = ''  # Added so that nothing gets displayed in the template if this variable is not set
-        response = "random"
         # talk to the reCAPTCHA service
-        """        
-        response = captcha.submit(\
+        response = captcha.submit(
          request.POST.get('recaptcha_challenge_field'),
             request.POST.get('recaptcha_response_field'),  
             settings.RECAPTCHA_PRIVATE_KEY,  
-            'shaastra.org',)  
-        #     request.META['REMOTE_ADDR'],)  
-        """
-        if response:
+            request.META['REMOTE_ADDR'],)  
+        
+        if response.is_valid:
             if register_form.is_valid():
                 data = register_form.cleaned_data
                 new_user = User(first_name = data['first_name'],
