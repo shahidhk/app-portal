@@ -9,11 +9,11 @@
     	<div id="header" class="navbar navbar-inverse navbar-static-top">
         	<div class="navbar-inner">
             	<div class="container">
-                	<a class="brand" href="{{site_url}}">Shaastra 2014 || Appplication Portal</a>
+                	<a class="brand" href="{{site_url}}">Welcome</a>
                     <div id="links" class="pull-right nav-collapse collapse">
                     	<ul class="nav">
                         	<li class="active"><a href="{{site_url}}">Home</a></li>
-                            <li class=""><a href="{% url core.views.subdepartments username=user %}"> Add a new subdepartment </a></li>
+                            <li class=""><a href="{% url core.views.subdepartments username=user %}"> Add subdepartment </a></li>
                             <li class=""><a href="{{site_url}}accounts/logout/"> Logout </a></li>
                         </ul> 
                     </div>
@@ -23,7 +23,7 @@
         <div id="content" class="container">
         	<div class="row-fluid">     
                 <div class="span12" id="core-dashboard">
-                	<h4>Sub-Departments</h4>
+                	<h4>Subdepartments:</h4>
                 	<table class="span8 table table-bordered table-striped">
                      {% for dept in subdepts %}
                       <tr><td><a href="{% url core.views.questions username=user subdept_id=dept.id %}">{{dept}}</a></td><td><a href="{% url core.views.questions username=user subdept_id=dept.id %}">Edit/Add Questions</a></td><td><a href="{% url core.views.submissions username=user subdept_id=dept.id %}">View Submissions</a></td></tr>
