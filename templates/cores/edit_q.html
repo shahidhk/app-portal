@@ -1,5 +1,8 @@
-<html>
+{% extends "cores/base.html" %}
+{% block content %}
+
 <form action='' method="POST">
 {{qedit.as_table}}
-<input type="submit">
+<input class="btn btn-primary" type="submit">
 </form>
+{% endblock %}

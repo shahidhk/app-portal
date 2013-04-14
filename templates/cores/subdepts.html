@@ -1,3 +1,5 @@
+{% extends "cores/base.html" %}
+{% block content %}
 {% if index %}
 You have successfully created {{index}} new events.
 {% endif %}
@@ -9,6 +11,7 @@ You have successfully created {{index}} new events.
     {{ form.as_table }}
     <br>
     {% endfor %}
-    <input type="submit">
+    <input type="submit" class="btn btn-primary">
 </form>
+{% endblock %}
 

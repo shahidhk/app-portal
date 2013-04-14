@@ -1,5 +1,7 @@
-<html>
+{% extends "cores/base.html" %}
+{% block content %}
 <form action='' method="POST">
 {{subedit.as_table}}
-<input type="submit">
+<input type="submit" class="btn btn-primary">
 </form>
+{% endblock %}

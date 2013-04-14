@@ -52,7 +52,27 @@ def questions_edit(request,username=None,subdept_id=None,q_id=None):
             q=QuestionForm(request.POST,instance=question)
             q.save()
             return redirect('core.views.questions',username=request.user,subdept_id=subdept_id)
-    return redirect('core.views.dashboard',username=request.user)
+    return redirect('core.views.core_dashboard',username=request.user)
+
+
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def questions_delete(request,username=None,subdept_id=None,q_id=None):
+    """
+    Working on this.
+
+    This loads up question instance,
+    checks if the owner of that question is trying to edit
+    it and allows him to do so.
+    """
+    question=Question.objects.get(id=q_id)
+    if (question.subdept.id == int(subdept_id)):
+        question.delete()
+        return redirect('core.views.questions',username=request.user,subdept_id=subdept_id)
+    return redirect('core.views.core_dashboard',username=request.user)
+
+
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
