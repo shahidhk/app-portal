@@ -3,6 +3,7 @@ Thanks! {{index}} questions have been saved.
 {% endif %}
 {% for q in questions %}
 {{q.question}}
+<a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a>
 {%endfor%}
 
 <br>
