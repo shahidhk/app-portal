@@ -3,6 +3,7 @@
 	<title>Appllcation Portal</title>
 	<link rel="stylesheet" href="{{site_url}}static/css/bootstrap.min.css"  />
 	<link rel="stylesheet" href="{{site_url}}static/css/style.css"  />
+    <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico">
 </head>
 <body>
 	<div id="wrapper" class="">
@@ -21,7 +22,7 @@
         </div>
         <div id="content" class="container">
         	<div class="row-fluid">     
-                <div class="span12 well" id="register">
+                <div class="span12 well" id="forms">
                      {% if invalid_login %}
 						<span style="color:#9d261d">Invalid Login!</span>
 					{% endif %}
@@ -49,7 +50,7 @@
                               {% if captcha_response != "" %}
                                   <p class="errorlist">The words typed did not match the words in the image</p>
                               {% endif %}<br>
-                              <input type="submit" value="Register"/>
+                              <input type="submit" value="Register" class="btn btn-primary"/>
                             </form>
                       {% endif %}
                 </div>
