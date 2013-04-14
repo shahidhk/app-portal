@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# ShaastraWebOps
+# TODO: Ensure only cores of a department can edit stuff on the department
 
 from django.shortcuts import render_to_response, redirect, HttpResponseRedirect, HttpResponse
 from django.template.context import Context, RequestContext
@@ -31,7 +31,6 @@ def core_dashboard(request,username=None):
     """
     user = request.user
     subdepts = SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
-    print subdepts
     return render_to_response("cores/core.html",locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -44,14 +43,16 @@ def questions_edit(request,username=None,subdept_id=None,q_id=None):
     checks if the owner of that question is trying to edit
     it and allows him to do so.
     """
-    question=Question.objects.get(id=q_id)
-    if (question.subdept.id == subdept_id):
-        qedit=QuestionForm(instance=question)
-        if request.method=="POST":
-            q=QuestionForm(request.POST)
+    if (question.subdept.id == int(subdept_id)):
+        question=Question.objects.get(id=q_id)
+        if request.method!="POST":
+            qedit=QuestionForm(instance=question)
+            return render_to_response('cores/edit_q.html',locals(), context_instance=RequestContext(request))
+        else:
+            q=QuestionForm(request.POST,instance=question)
             q.save()
-    return render_to_response('core/edit_q.html',locals(), context_instance=RequestContext(request))
-
+            return redirect('core.views.questions',username=request.user,subdept_id=subdept_id)
+    return redirect('core.views.dashboard',username=request.user)
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
@@ -91,7 +92,6 @@ def subdepartments(request,username=None):
         for subdeptform in subdeptformset:
             if subdeptform.is_valid():
                 subdept=subdeptform.save(commit=False)
-
                 subdept.dept=request.user.get_profile().is_core_of
                 subdept.save()
                 index+=1
