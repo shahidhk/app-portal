@@ -103,7 +103,7 @@ def subdepartments(request,username=None):
 def submissions(request,username=None,subdept_id=None):
     """
     Portal to access all submissions
-    for a partiicualar subdept.
+    for a particular subdept.
     """
     if subdept_id:
         AppFormSet = modelformset_factory(Application, form=SelectAppForm)
@@ -130,12 +130,24 @@ def submissions(request,username=None,subdept_id=None):
 
 @login_required
 @user_passes_test(lambda u: u.get_profile().is_core_of)
-def applicants(request,username=None,subdept=None):
+def applicants(request,username=None,applicant=None):
     """
-    Portal to view details about all applicants
-    for a subdept.
+    Portal to view all details about an applicant.
     """
-    apps = Application.objects.filter(subdept=subdept)
-    applicants = [app.user for app in apps]
-    return render_to_response("cores/applicants.html",locals(), context_instance=RequestContext(request))
+    applicant = User.objects.get(username=applicant)
+    applicant_profile = applicant.get_profile()
+    applications = Application.objects.filter(user=applicant)
+    return render_to_response("cores/applicant.html",locals(), context_instance=RequestContext(request))
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def applications(request,username=None,app_id=None):
+    """
+    Portal to view the details of a particular application
+    """
+    app = Application.objects.get(id=app_id)
+    answers   = app.answers.all()
+    questions = [ans.question for ans in answers]
+    qna = zip(questions,answers)
+    return render_to_response("cores/application.html",locals(), context_instance=RequestContext(request))
 

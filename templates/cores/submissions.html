@@ -6,7 +6,7 @@
     <form action="" method="POST">
     {{ appformset.management_form }}
     {% for app in app_details %}
-        <p>User: {{app.0.user}} <br>
+        <p>User: <a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a><br>
         <p>#: {{app.0.preference}} <br>
         <p>Credentials: {{app.0.credentials.get_full_content}} <br>
         <p>Ref: {{app.0.references.get_full_content}} <br>
