@@ -7,4 +7,20 @@
         <input type="submit" value="View Questions"/>
       </form>
 
+        
+        <p>You have applied for the following coordships</p>
+        <table>
+            <tr>
+            <th>Preference</th>
+            <th>Sub Department</th>
+            </tr>
+            {% for a in apps %}
+            <tr>
+            <td>{{a.preference}}</td>
+            <td>{{a.subdept}}</td>
+
+            
+            </tr>
+            {% endfor %}
+        </table>
 </html>
