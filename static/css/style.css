@@ -12,3 +12,4 @@
 #forms label.recaptcha_input_area_text{float: none;clear: none;display: block;}
 #forms #recaptcha_response_field{ float:none;height:auto;}
 textarea{height:50px;max-width:100%;min-width:100%;}
+table{font-size:13px;
