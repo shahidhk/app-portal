@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# ShaastraWebOps
-
 from django.db import models
 from django.contrib.auth.models import User
 from account.models import DEPT_CHOICES
@@ -12,7 +10,6 @@ class Answer(models.Model):
     """
     Stores a textfield answer to each question.
     """
-    user     = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     answer   = models.TextField()
 
@@ -62,9 +59,9 @@ class Application(models.Model):
     """
     user        = models.ForeignKey(User)
     subdept     = models.ForeignKey(SubDept)
+    answers     = models.ManyToManyField(Answer)
     preference  = models.IntegerField(default=1)
     credentials = models.ForeignKey(Credential)
     references  = models.ForeignKey(Reference)
     lockstatus  = models.BooleanField(default=False)
     timestamp   = models.DateTimeField(auto_now=True, editable=False)
-    answer     = models.ManyToManyField(Answer)

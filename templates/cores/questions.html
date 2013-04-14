@@ -1,6 +1,9 @@
 {% if index %}
 Thanks! {{index}} questions have been saved.
 {% endif %}
+{% for q in questions %}
+{{q.question}}
+{%endfor%}
 
 <br>
 <form action='' method="POST">
@@ -10,3 +13,4 @@ Thanks! {{index}} questions have been saved.
 {% endfor %}
 <input type="submit">
 </form>
+:D
