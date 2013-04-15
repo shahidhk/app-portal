@@ -1,11 +1,17 @@
 {% extends "cores/base.html" %}
 {% block content %}
-<form action='' method="POST">
-    {{q.as_table}}
+<h5>Add Questions to Mutliple Deparmtents</h5>
+<form action='' method="POST" class="form-horizontal span8">
+    <div class="control-group">{{q.as_table}}</div>
     {% for subdept in subdepts %}
-    <input type="checkbox" name="subdepartments" id="option{{subdept.id}}" value={{subdept.id}} />
-    <label for="option{{subdept.id}}"><b>{{subdept.name}}</b></label><br />
+    <div class="control-group">
+        <input type="checkbox" name="subdepartments" id="option{{subdept.id}}" value={{subdept.id}} />
+        <label for="option{{subdept.id}}" class="checkboxes"><strong>{{subdept.name}}</strong></label>
+    </div>
     {% endfor %}
-    <input type="submit" class="btn btn-large">
+    <div class="control-group">
+       <input type="submit" class="btn btn-primary" />
+       <a href="{{site_url}}" class="btn">Back</a>
+    </div>
 </form>
 {% endblock %}
