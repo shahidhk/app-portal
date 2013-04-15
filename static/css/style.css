@@ -8,9 +8,9 @@
 #forms select { float:left;}
 #forms label{ display:inline;padding: 5px 0px;margin-right:10px;width:120px;float:left; clear:left;}
 #forms span.helptext{float:left;clear:left;margin-left:135px;font-size:12px; font-style:italic;color:#333;}
-#forms ul.errorlist {height:30px;width:500px;float:right;margin-left:-50px;color:#9d261d;font-style:italic} 
+#forms ul.errorlist {height:30px;width:500px;float:right;margin-left:-50px;}
 #forms label.recaptcha_input_area_text{float: none;clear: none;display: block;}
 #forms #recaptcha_response_field{ float:none;height:auto;}
 textarea{height:50px;max-width:100%;min-width:100%;font-size:13px;}
 #content label,table,select,input{font-size:13px;}
-
+ul.errorlist{color:#9d261d;font-style:italic} 
