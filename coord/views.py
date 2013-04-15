@@ -114,7 +114,11 @@ def application(request, sub_dept_id = None):
                         f.save()
                         ans = Answer.objects.get(id = f.id)                        
                         curr.answers.add(ans)
+                        comment = Comments(answer = ans, comment = " ")
+                        comment.save()
                     curr.save()
+                    appcomment = AppComments(app = curr, comment = " ")
+                    appcomment.save()
         else:  
             forms = AnswerFormSet(queryset = Answer.objects.none())
             app = ApplicationForm()
