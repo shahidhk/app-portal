@@ -1,4 +1,5 @@
-<html>
+{% extends "coord/base.html" %}
+{% block content %}
 <form action="" method="POST">
         {%csrf_token%}
         {{ forms.management_form}}
@@ -11,4 +12,5 @@
         {% endfor %} 
         <input type="submit" value="Submit"/>
 </form>
-</html>
+{% endblock %}
+
