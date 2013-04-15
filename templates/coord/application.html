@@ -4,12 +4,15 @@
         {%csrf_token%}
         {{ forms.management_form}}
         {{ app.as_table }}
+        <h5>Aptitude and Competence Questionnaire:</h5>
+        <ol>
         {% for q in zipped %}
-            <p>{{q.0.question}}</p>
-            {{q.1}}
+            <li><p>{{q.0.question}}</p>
+            {{q.1}}</li>
             <!--<p>{{q.question}}</p>
             {{f.as_table}}-->
-        {% endfor %} 
+        {% endfor %}
+        </ol> 
         <input type="submit" value="Submit" class="btn btn-primary"/>
 </form>
 {% endblock %}
