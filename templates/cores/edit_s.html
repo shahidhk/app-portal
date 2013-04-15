@@ -1,36 +1,11 @@
-<html>
-<head>
-	<title>Application Portal</title>
-	<link rel="stylesheet" href="{{site_url}}static/css/bootstrap.min.css"  />
-	<link rel="stylesheet" href="{{site_url}}static/css/style.css"  />
-    <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico">
-</head>
-<body>
-	<div id="wrapper" class="">
-    	<div id="header" class="navbar navbar-inverse navbar-static-top">
-        	<div class="navbar-inner">
-            	<div class="container">
-                	<a class="brand" href="{{site_url}}">Shaastra 2014 || Appplication Portal</a>
-                    <div id="links" class="pull-right nav-collapse collapse">
-                    	<ul class="nav">
-                        	<li class=""><a href="{{site_url}}">Home</a></li>
-                            <li class=""><a href="{% url core.views.subdepartments username=user %}"> Add subdepartment </a></li>
-                            <li class=""><a href="{{site_url}}accounts/logout/"> Logout </a></li>
-                        </ul> 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="content" class="container">
-        	<div class="row-fluid">     
-                <div class="span12" id="core-dashboard">                                             
-                          <form action='' method="POST">
-                          {{subedit.as_table}}
-                          <input type="submit" class="btn btn-primary">
-                          </form>
-                </div>
-            </div>
-        </div>
+{% extends "cores/base.html" %}
+{% block content %}
+<div class="span12" id="core-dashboard">
+    <div id="forms">
+        <form action='' method="POST">
+            {{subedit.as_table}}
+            <input type="submit" class="btn btn-primary">
+        </form>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

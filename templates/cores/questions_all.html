@@ -1,0 +1,11 @@
+{% extends "cores/base.html" %}
+{% block content %}
+<form action='' method="POST">
+    {{q.as_table}}
+    {% for subdept in subdepts %}
+    <input type="checkbox" name="subdepartments" id="option{{subdept.id}}" value={{subdept.id}} />
+    <label for="option{{subdept.id}}"><b>{{subdept.name}}</b></label><br />
+    {% endfor %}
+    <input type="submit" class="btn btn-large">
+</form>
+{% endblock %}
