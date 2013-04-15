@@ -28,7 +28,7 @@ def login(request):
             if user.get_profile().is_core_of:
                 return HttpResponseRedirect(settings.SITE_URL + 'core/')
             else:
-                return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+                return HttpResponseRedirect(settings.SITE_URL + 'coord/home/')
         invalid_login = True
         login_form = LoginForm()
         return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
@@ -37,7 +37,7 @@ def login(request):
             if request.user.get_profile().is_core_of:
                 return HttpResponseRedirect(settings.SITE_URL + 'core/')
             else:
-                return HttpResponseRedirect(settings.SITE_URL + 'coord/')        
+                return HttpResponseRedirect(settings.SITE_URL + 'coord/')
         else:
             login_form = LoginForm()
         return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
@@ -52,10 +52,10 @@ def register(request):
         # talk to the reCAPTCHA service
         response = captcha.submit(
          request.POST.get('recaptcha_challenge_field'),
-            request.POST.get('recaptcha_response_field'),  
-            settings.RECAPTCHA_PRIVATE_KEY,  
-            request.META['REMOTE_ADDR'],)  
-        
+            request.POST.get('recaptcha_response_field'),
+            settings.RECAPTCHA_PRIVATE_KEY,
+            request.META['REMOTE_ADDR'],)
+
         if response.is_valid:
             if register_form.is_valid():
                 data = register_form.cleaned_data
