@@ -1,6 +1,25 @@
 {% extends "cores/base.html" %}
 {% block content %}
 <h5>Add Questions to Mutliple Deparmtents</h5>
+<script type="text/javascript">
+    function selectall() {
+        checkboxes = document.getElementsByName('subdepartments');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = true;
+        }
+    }
+    window.onload = selectall;
+    </script>
+<script type="text/javascript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('subdepartments');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
+<input name="mastertoggle" type="checkbox" onClick="toggle(this)" checked /> Toggle All<br/>
+
 <form action='' method="POST" class="form-horizontal">
     <div class="control-group">{{q.as_table}}</div>
     {% for subdept in subdepts %}
@@ -10,8 +29,8 @@
     </div>
     {% endfor %}
     <div class="control-group">
-       <input type="submit" class="btn btn-primary" />
-       <a href="{{site_url}}" class="btn">Back</a>
+        <input type="submit" class="btn btn-primary" />
+        <a href="{{site_url}}" class="btn">Back</a>
     </div>
 </form>
 {% endblock %}
