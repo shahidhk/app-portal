@@ -20,6 +20,9 @@
 </script>
 <input name="mastertoggle" type="checkbox" onClick="toggle(this)" checked /> Toggle All<br/>
 
+{% if index %}
+Your question was added to {{index}} departments.
+{% endif %}
 <form action='' method="POST" class="form-horizontal">
     <div class="control-group">{{q.as_table}}</div>
     {% for subdept in subdepts %}

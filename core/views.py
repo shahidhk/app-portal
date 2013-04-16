@@ -78,6 +78,7 @@ def questions_delete(request,username=None,subdept_id=None,q_id=None):
 def questions_all(request,username=None):
     subdepts=SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
     if request.method=="POST":
+        index=0;
         add_to=request.POST.getlist('subdepartments')
         for x in add_to:
             question=QuestionForm(request.POST)
@@ -85,6 +86,7 @@ def questions_all(request,username=None):
                 q=question.save(commit=False)
                 q.subdept=SubDept.objects.get(id=x)
                 q.save()
+                index+=1
             else:
                 break
     q=QuestionForm()
