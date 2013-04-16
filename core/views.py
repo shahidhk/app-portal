@@ -174,7 +174,7 @@ def submissions(request,username=None,subdept_id=None):
                     appform.save()
             saved = True
         else:
-            appformset = AppFormSet(queryset=Application.objects.all())
+            appformset = AppFormSet(queryset=Application.objects.filter(subdept=subdept))
         app_details = zip(applications,appformset)
     else:
         return redirect('core.views.core_dashboard',username=request.user)
