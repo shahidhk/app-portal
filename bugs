@@ -1,20 +1,13 @@
 Bugs:
- Add multiple forms:
-    Defaultly selected sub-depts or one checkbox to selec/deselect all
-    prominent success/failure msg after form submission or alert box. 
  Submit Application:
     you already have this preference as a validation error!
  Applications:
     success message after submitting comments.
     select/reject status etc
-    glyphicons in template
+    glyphicons in template //done
     only department core can edit an application
     any core can view an application
     back button
- Home page:
-    glyphicons in template
- Add new sub-department:
-    form is not displayed properly
  Core Dashboard:
     Department name and user name on navbar
  Coord Dashboard:
@@ -23,9 +16,6 @@ Bugs:
  Edit Question:
     Back button should go to questions and not dashboard!
     Delete question button to be present along with edit qiestion
- Questions:
-    Delete button to be present in red and ask for confirmation
-    successful deletion message
  Submissions:
     Sortable based on timestamp and preference.
     Four different tables:
@@ -34,5 +24,4 @@ Bugs:
         <7 CGPA in orange
         Rejected in red
     Lock applications submissions button and always show the applicaitopn lock status message
-    Glyphicons in template    
- 
+

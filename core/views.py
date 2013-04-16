@@ -78,6 +78,7 @@ def questions_delete(request,username=None,subdept_id=None,q_id=None):
 def questions_all(request,username=None):
     subdepts=SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
     if request.method=="POST":
+        index=0;
         add_to=request.POST.getlist('subdepartments')
         for x in add_to:
             question=QuestionForm(request.POST)
@@ -85,6 +86,7 @@ def questions_all(request,username=None):
                 q=question.save(commit=False)
                 q.subdept=SubDept.objects.get(id=x)
                 q.save()
+                index+=1
             else:
                 break
     q=QuestionForm()
@@ -164,12 +166,7 @@ def submissions(request,username=None,subdept_id=None):
     if subdept_id:
         AppFormSet = modelformset_factory(Application, form=SelectAppForm)
         subdept = SubDept.objects.get(id = subdept_id)
-        applications = Application.objects.filter(subdept = subdept)
-        qna = []
-        for app in applications:
-            answers   = app.answers.all()
-            questions = [ans.question for ans in answers]
-            qna.append(zip(questions,answers))
+        applications  = Application.objects.filter(subdept = subdept, preference__gte = 0)
         if request.method=="POST":
             appformset = AppFormSet(request.POST)
             for appform in appformset:
@@ -178,7 +175,7 @@ def submissions(request,username=None,subdept_id=None):
             saved = True
         else:
             appformset = AppFormSet(queryset=Application.objects.all())
-        app_details = zip(applications,qna,appformset)
+        app_details = zip(applications,appformset)
     else:
         return redirect('core.views.core_dashboard',username=request.user)
     return render_to_response("cores/submissions.html",locals(), context_instance=RequestContext(request))
@@ -202,6 +199,8 @@ def applications(request,username=None,app_id=None):
     Portal to view the details of a particular application
     """
     app = Application.objects.get(id=app_id)
+    if request.user.get_profile().is_core_of is not app.subdept.dept:
+        return redirect('core.views.applicants', username=request.user, applicant = app.user)
     answers   = app.answers.all()
     questions = [ans.question for ans in answers]
     comments = Comments.objects.filter(answer__in=answers)

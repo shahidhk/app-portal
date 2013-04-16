@@ -73,3 +73,9 @@ class Application(models.Model):
     timestamp   = models.DateTimeField(auto_now=True, editable=False)
     rank    = models.IntegerField(default=-1) # This field determines if the core has selected the application and the priority assigned
     status = models.CharField(max_length='10',choices=STATUS_CHOICES,default='pending')
+    
+    def pass_cgpa(self):
+        if self.user.get_profile().cgpa >7.0:
+            return True
+        else:
+            return False

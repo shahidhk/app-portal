@@ -15,20 +15,20 @@
                     	<ul class="nav">
                         	<li class=""><a href="{{site_url}}">Home</a></li>
                             <li class=""><a href="{{site_url}}accounts/register">Register</a></li>
-                        </ul> 
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div id="content" class="container">
-        	<div class="row-fluid">     
+        	<div class="row-fluid">
                 <div class="span12 well" id="login">
                      {% if invalid_login %}
 						<span style="color:#9d261d">Invalid Login!</span>
 					{% endif %}
                    <h4>Login:</h4>
                     <form action="{{site_url}}accounts/login/" method="POST" class="form span5">
-                        
+
                         {% csrf_token %}
   						<div class="control-group">
     						<label class="span3 control-label">Roll No</label>
@@ -46,5 +46,6 @@
             </div>
         </div>
     </div>
+    <script src="{{site_url}}js/jquery-1.6.2.js"></script>
 </body>
 </html>
