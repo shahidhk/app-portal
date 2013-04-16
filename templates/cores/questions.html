@@ -16,12 +16,13 @@
 <div class="span6 pull-right" id="view">
     <h5>Current Questions</h5>
     {% if index %}
-    <p>Thanks! {{index}} questions have been saved.</p>
+    <p class="text-success">Thanks! {{index}} questions have been saved.</p>
     {% endif %}
     <table class="table table-bordered table-striped table-hover">
         {% for q in questions %}
-        <tr><td class="span11">{{q.question}}</td>
-            <td class="span1"><a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a></td><td><a href="{% url core.views.questions_delete username=request.user subdept_id=subdept_id q_id=q.id %}"><i class="icon-remove"></i></a></td></tr>
+        <tr><td class="span9">{{q.question}}</td>
+            <td class="span3">
+            	<a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}" style="margin-right:10px;">Edit</a><a href="{% url core.views.questions_delete username=request.user subdept_id=subdept_id q_id=q.id %}">Delete</a></td></tr>
         {%endfor%}
     </table>
 </div>

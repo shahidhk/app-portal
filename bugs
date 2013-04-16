@@ -10,14 +10,14 @@ Bugs:
  Applications:
     success message after submitting comments.
     select/reject status etc
-    glyphicons in template
+    glyphicons in template //done
     only department core can edit an application
     any core can view an application
     back button
  Home page:
-    glyphicons in template
+    glyphicons in template //done
  Add new sub-department:
-    form is not displayed properly
+    form is not displayed properly //Done
  Core Dashboard:
     Department name and user name on navbar
  Coord Dashboard:
