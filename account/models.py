@@ -8,10 +8,15 @@ from core.models import *
 
 HOSTEL_CHOICES = (
     ('Alaknanda','Alaknanda'),
+    ('Saras','Saras'),
+    ('Jamuna','Jamuna'),
+    ('Sharav','Sharav'),
 )
 
 DEPT_CHOICES = (
     ('Events','Events'),
+    ('Finance','Finance'),
+    ('Design','Design'),
 )
 class UserProfile(models.Model):
     """

@@ -123,7 +123,7 @@ def application(request, sub_dept_id = None):
                     appcomment.save()
         else:  
             forms = AnswerFormSet(queryset = Answer.objects.none())
-            app = ApplicationForm()
+            app = ApplicationForm(initials={'subdept':SubDept.objects.get(id=sub_dept_id),})
     zipped = zip(qns,forms)
     return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))                    
 

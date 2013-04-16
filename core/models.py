@@ -13,8 +13,8 @@ class SubDept(models.Model):
     """
     dept        = models.CharField(max_length = 40, choices = DEPT_CHOICES)
     name        = models.CharField(max_length = 40)
-#    impose_cgpa = models.BooleanField(default = True)
-#    close_apps  = models.BooleanField(default = False)
+    impose_cgpa = models.BooleanField(default = True)
+    close_apps  = models.BooleanField(default = False)
 
     def __unicode__(self):
         return self.name

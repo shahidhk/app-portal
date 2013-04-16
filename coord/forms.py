@@ -18,14 +18,23 @@ class ApplicationForm(forms.ModelForm):
     references = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
     class Meta:
         model = Application
-        fields = {'preference'}
-        #fields = {'preference','user','subdept','answers'}  
-        """
-        widgets = {'user': forms.HiddenInput(),
-                    'subdept': forms.HiddenInput(),
-                    'answers': forms.HiddenInput(),}   
-        """   
+        fields = {'preference','subdept',}
+        widgets = {'subdept': forms.HiddenInput(),}
 
+    def clean_preference(self):
+        """
+            This function validates whether the preference number is valid
+        """
+        apps = Application.objects.filter(user=request.user, preference = self.cleaned_data['preference'])
+        if len(apps):
+            if self in apps and len(apps) == 1:
+                raise forms.ValidationError('Names cannot contain anything other than alphabets.')
+            else:
+                pass
+        else:
+            return self.cleaned_data['preference']
+
+    
 class SelectSubDeptForm(forms.ModelForm):
     name = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.all())
     class Meta:
