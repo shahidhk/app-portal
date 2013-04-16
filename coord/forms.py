@@ -19,17 +19,18 @@ class ApplicationForm(forms.ModelForm):
     references = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
     class Meta:
         model = Application
-        fields = {'preference','subdept',}
-        widgets = {'subdept': forms.HiddenInput(),}
+        fields = {'preference','subdept','user'}
+        widgets = {'subdept': forms.HiddenInput(),
+                   'user'   : forms.HiddenInput(),}
 
     def clean_preference(self):
         """
             This function validates whether the preference number is valid
         """
-        apps = Application.objects.filter(user=request.user, preference = self.cleaned_data['preference'])
+        apps = Application.objects.filter(user = self.cleaned_data['user'], preference = self.cleaned_data['preference'])
         if len(apps):
             if self in apps and len(apps) == 1:
-                raise forms.ValidationError('Names cannot contain anything other than alphabets.')
+                raise forms.ValidationError('This preference is already used')
             else:
                 pass
         else:
