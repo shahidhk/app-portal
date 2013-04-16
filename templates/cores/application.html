@@ -1,6 +1,9 @@
 {% extends "cores/base.html" %}
 {% block content %}
 <h4>Application for {{app.subdept}} submitted by {{app.user}}</h4>
+    {% if saved %}
+     <h7> All changes saved successfully! </h7>
+    {% endif %}
     <ul>
         <li><strong>User:</strong> {{app.user}} </li>
         <li><strong>Preference Number:</strong> {{app.preference}} </li>
