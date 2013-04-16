@@ -1,35 +1,12 @@
-<html>
-<head>
-	<title>Application Portal</title>
-	<link rel="stylesheet" href="{{site_url}}static/css/bootstrap.min.css"  />
-	<link rel="stylesheet" href="{{site_url}}static/css/style.css"  />
-    <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico">
-</head>
-<body>
-	<div id="wrapper" class="">
-    	<div id="header" class="navbar navbar-inverse navbar-static-top">
-        	<div class="navbar-inner">
-            	<div class="container">
-                	<a class="brand" href="{{site_url}}">Shaastra 2014 || Appplication Portal</a>
-                    <div id="links" class="pull-right nav-collapse collapse">
-                    	<ul class="nav">
-                        	<li class=""><a href="{{site_url}}">Home</a></li>
-                            <li class=""><a href="{{site_url}}accounts/logout">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="content" class="container">
-        	<div class="row-fluid">
-                <div class="span12" id="forms">
+{% extends "cores/base.html" %}
+{% block content %}
                     <h3>Submissions for {{ subdept.get_full_name }}</h3>
                     {% if saved %}
                         All changes saved successfully
                     {% endif %}
                     <form action="" method="POST">
                     {{ appformset.management_form }}
-                    <table id="apps_accepted" class="table table-bordered table-striped table-hover success">
+                    <table id="apps_accepted" class="table table-bordered table-striped table-hover">
                     <thead>
                         <td>User</td>
                         <td>Preference</td>
@@ -41,7 +18,7 @@
                     <tbody>
                     {% for app in app_details %}
                         {% if app.0.status == 'accepted' and app.0.pass_cgpa %}
-                        <tr>
+                        <tr class="success">
                         <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
                         <td>{{app.0.preference}}</td>
                         <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
@@ -65,7 +42,7 @@
                     <tbody>
                     {% for app in app_details %}
                         {% if app.0.status == 'pending' and app.0.pass_cgpa %}
-                        <tr>
+                        <tr class="info">
                         <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
                         <td>{{app.0.preference}}</td>
                         <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
@@ -89,7 +66,7 @@
                     <tbody>
                     {% for app in app_details %}
                         {% if not app.0.pass_cgpa %}
-                        <tr>
+                        <tr class="warning">
                         <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
                         <td>{{app.0.preference}}</td>
                         <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
@@ -113,7 +90,7 @@
                     <tbody>
                     {% for app in app_details %}
                         {% if app.0.status == 'rejected' and app.0.pass_cgpa %}
-                        <tr>
+                        <tr class="error">
                         <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
                         <td>{{app.0.preference}}</td>
                         <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
@@ -130,10 +107,4 @@
                            <input type="submit" class="btn btn-primary" />
                            <a href="{{site_url}}" class="btn">Back</a>
                         </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
+{% endblock %}
