@@ -1,19 +1,24 @@
-<html>
-<h3>Application for {{app.subdept}} submitted by {{app.user}}</h3>
-    <p>User: {{app.user}} <br>
-    <p>#: {{app.preference}} <br>
-    <p>Credentials: {{app.credentials.get_full_content}} <br>
-    <p>Ref: {{app.references.get_full_content}} <br>
-    <p>Time: {{app.timestamp}} <br>
+{% extends "cores/base.html" %}
+{% block content %}
+<h4>Application for {{app.subdept}} submitted by {{app.user}}</h4>
+    <ul>
+        <li><strong>User:</strong> {{app.user}} </li>
+        <li><strong>Preference Number:</strong> {{app.preference}} </li>
+        <li><strong>Credentials:</strong> <p>{{app.credentials.get_full_content}}</p> </li>
+        <li><strong>References:</strong> <p>{{app.references.get_full_content}}</p></li>
+        <li><strong>Time:</strong> {{app.timestamp}} </li>
+    </ul>
     <form action="" method="POST">
-    {{appcommentsform.as_table}}<hr>
-    {{ commentsformset.management_form }}
-    
-    {% for q in qna %}
-    <p>{{ q.0.get_full_content }}<br>
-    <p>{{ q.1.get_full_content }}<br>
-    {{ q.2.as_table }}<hr>
-    {% endfor %}
-    <input type="submit" value="save" />
+        {{appcommentsform.as_table}}<hr>
+        {{ commentsformset.management_form }}
+        <h5>Annsers to the Questionnaire</h5>
+        <ol>
+        {% for q in qna %}
+        <li><strong>{{ q.0.get_full_content }}</strong>
+        <p>{{ q.1.get_full_content }}</p>
+        {{ q.2.as_table }}</li><hr>
+        {% endfor %}
+        </ol>
+        <input type="submit" value="Save" class="btn btn-primary"/>
     </form>
-</html>
+{% endblock %}

@@ -1,12 +1,21 @@
-<html>
+{% extends "cores/base.html" %}
+{% block content %}
 <h3>Details of {{ applicant }}</h3>
-    Applicant Profile Details:<br>
-    {{ applicant_profile }}
-    <br>
-    Submitted Applications:
-    {% for app in applications %}
-        <p>SubDept: {{app.subdept}} <br>
-        <p>#: {{app.preference}} <br>
-        <a href="{% url core.views.applications username=request.user app_id=app.id %}">View Application</a>
-    {% endfor %}
-</html>
+    <p>Applicant Profile Details:
+    {{ applicant_profile }}</p>
+    <h5>Submitted Applications:</h5>
+    <table class="span8 table table-bordered table-striped table-hover">
+        <tr>
+            <th class="span8">Sub-Department</th>
+            <th class="span2">Preference Number</th>
+            <th class="span2">Application</th>
+        </tr>
+        {% for app in applications %}
+        <tr>
+            <td>{{app.subdept}}</td>
+            <td>{{app.preference}}</td>
+            <td><a href="{% url core.views.applications username=request.user app_id=app.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
