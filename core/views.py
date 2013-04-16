@@ -199,6 +199,8 @@ def applications(request,username=None,app_id=None):
     Portal to view the details of a particular application
     """
     app = Application.objects.get(id=app_id)
+    if request.user.get_profile().is_core_of is not app.subdept.dept:
+        return redirect('core.views.applicants', username=request.user, applicant = app.user)
     answers   = app.answers.all()
     questions = [ans.question for ans in answers]
     comments = Comments.objects.filter(answer__in=answers)
