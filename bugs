@@ -1,6 +1,8 @@
 Bugs:
  Submit Application:
     you already have this preference as a validation error!
+    once submitted, submit button should disappear and the layout should change to view 
+    application and an edit button should be present instead
  Applications:
     success message after submitting comments.
     select/reject status etc

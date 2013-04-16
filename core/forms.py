@@ -49,7 +49,8 @@ class SelectAppForm(ModelForm):
     """
     class Meta:
         model = Application
-        fields = ('rank',)
+        fields = ('rank','status')
+        widgets = {'status':forms.HiddenInput(),}
 
 class CommentsForm(forms.ModelForm):
     """
