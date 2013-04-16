@@ -11,7 +11,8 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model   = Answer
         fields  = {'answer'}
-        widgets = {'answer': forms.Textarea(attrs={'cols': 80, 'rows': 20}),}
+        widgets = {'answer': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+                    }
         
 class ApplicationForm(forms.ModelForm):
     credentials = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))

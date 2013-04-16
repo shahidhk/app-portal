@@ -55,10 +55,8 @@ def application(request, sub_dept_id = None):
         AnswerFormSet = modelformset_factory(Answer, form = AnswerForm)
         a = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
         data = {'preference':a.preference,'references':a.references,'credentials' : a.credentials}
-        qna = []
         answers = a.answers.all()
         questions = [ans.question for ans in answers]
-        qna.append(zip(questions,answers))
         if request.method == 'POST':
             #AnswerFormSet = modelformset_factory(Answer, form = AnswerForm)
             forms = AnswerFormSet(request.POST,queryset = a.answers.all())
@@ -88,7 +86,7 @@ def application(request, sub_dept_id = None):
     except:    
         AnswerFormSet = modelformset_factory(Answer, form = AnswerForm, extra = number_of_questions)
         if request.method == 'POST':
-            forms = AnswerFormSet(request.POST)
+            forms = AnswerFormSet(request.POST,initial=[{'answer':'default'}])
             app = ApplicationForm(request.POST)
             if forms.is_valid() and app.is_valid():
                 temp = app.save(commit = False)
@@ -96,8 +94,6 @@ def application(request, sub_dept_id = None):
                     app_pref = Application.objects.get(user = request.user, preference = temp.preference)  
                     return HttpResponse("You already have this preference number")
                 except:
-                    #app.save() 
-                    n=0;
                     forms = forms.save(commit = False)
                     
                     ref = Reference(content = app.cleaned_data['references'])
@@ -110,6 +106,7 @@ def application(request, sub_dept_id = None):
                     temp.subdept = subdept 
                     temp.save()
                     curr = Application.objects.get(id = temp.id)
+                    n = 0
                     for f in forms:
                         f.question = qns[n]
                         n=n+1
