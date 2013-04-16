@@ -1,6 +1,4 @@
 Bugs:
- Add multiple forms:
-   Make alert message into a CSS alert.
  Submit Application:
     List of choices for preference instead of integer field
     successfully submitted message!
@@ -13,10 +11,6 @@ Bugs:
     only department core can edit an application
     any core can view an application
     back button
- Home page:
-    glyphicons in template
- Add new sub-department:
-    form is not displayed properly
  Core Dashboard:
     Department name and user name on navbar
  Coord Dashboard:
@@ -25,9 +19,6 @@ Bugs:
  Edit Question:
     Back button should go to questions and not dashboard!
     Delete question button to be present along with edit qiestion
- Questions:
-    Delete button to be present in red and ask for confirmation
-    successful deletion message
  Submissions:
     Sortable based on timestamp and preference.
     Four different tables:
@@ -36,5 +27,4 @@ Bugs:
         <7 CGPA in orange
         Rejected in red
     Lock applications submissions button and always show the applicaitopn lock status message
-    Glyphicons in template
 
