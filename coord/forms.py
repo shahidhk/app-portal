@@ -11,10 +11,10 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model   = Answer
         fields  = {'answer'}
-        widgets = {'answer': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
-                    }
+        widgets = {'answer': forms.Textarea(attrs={'cols': 80, 'rows': 20}),}
         
 class ApplicationForm(forms.ModelForm):
+    #preference = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.get_ids())
     credentials = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
     references = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
     class Meta:
@@ -22,7 +22,7 @@ class ApplicationForm(forms.ModelForm):
         fields = {'preference','subdept','user'}
         widgets = {'subdept': forms.HiddenInput(),
                    'user'   : forms.HiddenInput(),}
-
+    
     def clean_preference(self):
         """
             This function validates whether the preference number is valid

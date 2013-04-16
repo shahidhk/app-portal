@@ -17,13 +17,10 @@ class SubDept(models.Model):
     close_apps  = models.BooleanField(default = False)
 
     def __unicode__(self):
-        return self.name
-
-    def get_full_name(self):
         return "%s | %s " %(self.dept,self.name)
 
-    def __unicode__(self):
-        return '%s' % (self.name)
+    def get_short_name(self):
+        return self.name
 
 class Question(models.Model):
     """

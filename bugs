@@ -3,9 +3,6 @@ Bugs:
     Defaultly selected sub-depts or one checkbox to selec/deselect all
     prominent success/failure msg after form submission or alert box. 
  Submit Application:
-    List of choices for preference instead of integer field
-    successfully submitted message!
-    aspiring coords view/edit application hyperlink in the summary table
     you already have this preference as a validation error!
  Applications:
     success message after submitting comments.

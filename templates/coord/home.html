@@ -1,7 +1,7 @@
 {% extends "coord/base.html" %}
 {% block content %}
     <div class="span5">                       
-          <p>You have applied for the following coordships</p>
+          <p>You have applied for the following coordships. To edit your applications Click on the sub department name</p>
           <table class="table table-bordered table-striped table-hover">
               <tr>
               <th class="span1">Preference</th>
@@ -10,7 +10,7 @@
               {% for a in apps %}
               <tr>
               <td class="span1">{{a.preference}}</td>
-              <td>{{a.subdept}}</td>                                                
+              <td><a href = "{{site_url}}coord/application/{{a.subdept.id}}">{{a.subdept}}</a></td>                                                
               </tr>
               {% endfor %}
           </table>
