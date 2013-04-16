@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 from account.models import DEPT_CHOICES
 from core.models import SubDept, Question
 
+STATUS_CHOICES=(
+        ('accepted','Accepted'),
+        ('pending','Pending'),
+        ('rejected','Rejected'),
+        )
+
 class Answer(models.Model):
     """
     Stores a textfield answer to each question.
@@ -15,7 +21,7 @@ class Answer(models.Model):
 
     def __unicode__(self):
         return "%s..." % str(self.answer[:10])
-    
+
     def get_full_content(self):
         return str(self.answer)
 
@@ -31,10 +37,10 @@ class Credential(models.Model):
 
     def __unicode__(self):
         return "%s..." % str(self.content[:10])
-    
+
     def get_full_content(self):
         return str(self.content)
-        
+
 class Reference(models.Model):
     """
     Stores references given by the user.
@@ -44,10 +50,10 @@ class Reference(models.Model):
     references
     """
     content = models.TextField()
-    
+
     def __unicode__(self):
         return "%s..." % str(self.content[:10])
-    
+
     def get_full_content(self):
         return str(self.content)
 
@@ -65,4 +71,5 @@ class Application(models.Model):
     references  = models.ForeignKey(Reference)
     lockstatus  = models.BooleanField(default=False)
     timestamp   = models.DateTimeField(auto_now=True, editable=False)
-    selected    = models.IntegerField(default=-1) # This field determines if the core has selected the application and the priority assigned
+    rank    = models.IntegerField(default=-1) # This field determines if the core has selected the application and the priority assigned
+    status = models.CharField(max_length='10',choices=STATUS_CHOICES,default='pending')

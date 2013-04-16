@@ -222,3 +222,14 @@ def applications(request,username=None,app_id=None):
     qna = zip(questions,answers,commentsformset)
     return render_to_response("cores/application.html",locals(), context_instance=RequestContext(request))
 
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def cgpa_filter(request,username=None,subdept_id=None,default=7.0):
+    subdept=SubDept.objects.get(id=subdept_id)
+    apps=Application.objects.filter(subdept__id=subdept_id)
+    for app in apps:
+        if app.user.fet_profile().cgpa<default:
+            app.status='rejected'
+            app.rank=-1
+            app.save()
+    return redirect('core.views.submissions',username=request.user,subdept_id=subdept_id)
