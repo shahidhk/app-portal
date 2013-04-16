@@ -7,7 +7,10 @@
         {% for form in questionformset %}
         {{form.as_table}}<br>
         {% endfor %}
-        <input type="submit" class="btn btn-primary">
+    	<div class="control-group">
+           <input type="submit" class="btn btn-primary" />
+           <a href="{{site_url}}" class="btn">Back</a>
+        </div>
     </form>
 </div>
 <div class="span6 pull-right" id="view">
@@ -18,7 +21,7 @@
     <table class="table table-bordered table-striped table-hover">
         {% for q in questions %}
         <tr><td class="span11">{{q.question}}</td>
-            <td class="span1"><a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a></td><td><a href="{% url core.views.questions_delete username=request.user subdept_id=subdept_id q_id=q.id %}"> &Chi; </a></td></tr>
+            <td class="span1"><a href="{% url core.views.questions_edit username=request.user subdept_id=subdept_id q_id=q.id %}">Edit</a></td><td><a href="{% url core.views.questions_delete username=request.user subdept_id=subdept_id q_id=q.id %}"><i class="icon-remove"></i></a></td></tr>
         {%endfor%}
     </table>
 </div>

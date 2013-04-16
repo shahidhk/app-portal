@@ -16,3 +16,4 @@ textarea{height:50px;max-width:100%;min-width:100%;font-size:13px;}
 label.checkboxes{display:inline-block; text-transform:capitalize;}
 #content input[type="checkbox"]{margin:0px;}
 ul.errorlist{color:#9d261d;font-style:italic} 
+#dashboard textarea{ height:200px;}
