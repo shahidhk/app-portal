@@ -1,7 +1,6 @@
 Bugs:
  Add multiple forms:
-    Defaultly selected sub-depts or one checkbox to selec/deselect all
-    prominent success/failure msg after form submission or alert box. 
+   Make alert message into a CSS alert.
  Submit Application:
     List of choices for preference instead of integer field
     successfully submitted message!
@@ -37,5 +36,5 @@ Bugs:
         <7 CGPA in orange
         Rejected in red
     Lock applications submissions button and always show the applicaitopn lock status message
-    Glyphicons in template    
- 
+    Glyphicons in template
+
