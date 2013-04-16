@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.context import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 #from django import forms
 from django.forms.formsets import formset_factory
 from django.forms.models import modelformset_factory,inlineformset_factory
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from account.models import *
 from core.models import *
@@ -18,6 +18,7 @@ from coord.models import *
 from coord.forms import *
 
 @login_required
+@user_passes_test(lambda u: not u.get_profile().is_core_of)
 def coord_home(request):
     """
     Can edit profile,logout
@@ -34,11 +35,12 @@ def coord_home(request):
         form = SelectSubDeptForm(request.POST)
         if form.is_valid():
             subdept = SubDept.objects.get(name = form.cleaned_data['name'])
-            return HttpResponseRedirect(settings.SITE_URL + "coord/application/"+ str(subdept.id)) 
+            return redirect('coord.views.application', sub_dept_id=subdept.id)
     form = SelectSubDeptForm()    
     return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))    
     
 @login_required
+@user_passes_test(lambda u: not u.get_profile().is_core_of)
 def application(request, sub_dept_id = None):
     """
     Displays questions of the sub-department with id = sub_dept_id

@@ -11,9 +11,11 @@ class SubDept(models.Model):
       Example: Design is a Department whereas Graphic Design, Photography etc are sub-departments
 
     """
-    dept = models.CharField(max_length = 40, choices = DEPT_CHOICES)
-    name = models.CharField(max_length = 40)
-    
+    dept        = models.CharField(max_length = 40, choices = DEPT_CHOICES)
+    name        = models.CharField(max_length = 40)
+#    impose_cgpa = models.BooleanField(default = True)
+#    close_apps  = models.BooleanField(default = False)
+
     def __unicode__(self):
         return self.name
 
