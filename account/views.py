@@ -3,7 +3,7 @@
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template.context import Context, RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from account.models import Announcement
 from account.forms import *
@@ -26,18 +26,18 @@ def login(request):
                 redirectURL = settings.SITE_URL + nextURL
                 return HttpResponseRedirect(redirectURL)
             if user.get_profile().is_core_of:
-                return HttpResponseRedirect(settings.SITE_URL + 'core/')
+                return redirect('core.views.core_dashboard',username=user)
             else:
-                return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+                return redirect('coord.views.coord_home')
         invalid_login = True
         login_form = LoginForm()
         return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
     else:
         if request.user.is_authenticated():
             if request.user.get_profile().is_core_of:
-                return HttpResponseRedirect(settings.SITE_URL + 'core/')
+                return redirect('core.views.core_dashboard',username=request.user)
             else:
-                return HttpResponseRedirect(settings.SITE_URL + 'coord/')        
+                return redirect('coord.views.coord_home')
         else:
             login_form = LoginForm()
         return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
@@ -88,9 +88,9 @@ def logout(request):
     """
     if request.user.is_authenticated():
         auth_logout(request)
-        return HttpResponseRedirect(settings.SITE_URL)
+        return redirect('application_portal.views.home')
     else:
-      return HttpResponseRedirect('/')
+        return redirect('application_portal.views.home')
 
 def editprofile(request):
     """
