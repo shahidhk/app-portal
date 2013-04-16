@@ -49,7 +49,7 @@ class SelectAppForm(ModelForm):
     """
     class Meta:
         model = Application
-        fields = ('selected',)
+        fields = ('rank',)
 
 class CommentsForm(forms.ModelForm):
     """
