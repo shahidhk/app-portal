@@ -7,7 +7,7 @@ Bugs:
  Applications:
     success message after submitting comments.
     select/reject status etc
-    glyphicons in template
+    glyphicons in template //done
     only department core can edit an application
     any core can view an application
     back button

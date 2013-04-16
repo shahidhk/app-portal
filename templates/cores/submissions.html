@@ -29,26 +29,103 @@
                     {% endif %}
                     <form action="" method="POST">
                     {{ appformset.management_form }}
-                    <table class="table table-bordered table-striped table-hover">
+                    <table id="apps_accepted" class="table table-bordered table-striped table-hover success">
                     <thead>
                         <td>User</td>
                         <td>Preference</td>
                         <td>View Application</td>
                         <td>Timestamp</td>
+                        <td>Status</td>
                         <td>Rank</td>
                     </thead>
                     <tbody>
                     {% for app in app_details %}
+                        {% if app.0.status == 'accepted' and app.0.pass_cgpa %}
                         <tr>
                         <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
                         <td>{{app.0.preference}}</td>
                         <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
                         <td>{{app.0.timestamp}}</td>
-                        <td>{{ app.2.as_p }}</td>
+                        <td>{{app.0.status}}</td>
+                        <td>{{ app.1.as_p }}</td>i
                         </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                     </table>
+                    <table id="apps_pending" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <td>User</td>
+                        <td>Preference</td>
+                        <td>View Application</td>
+                        <td>Timestamp</td>
+                        <td>Status</td>
+                        <td>Rank</td>
+                    </thead>
+                    <tbody>
+                    {% for app in app_details %}
+                        {% if app.0.status == 'pending' and app.0.pass_cgpa %}
+                        <tr>
+                        <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                        <td>{{app.0.preference}}</td>
+                        <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
+                        <td>{{app.0.timestamp}}</td>
+                        <td>{{app.0.status}}</td>
+                        <td>{{ app.1.as_p }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <table id="apps_cgpa" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <td>User</td>
+                        <td>Preference</td>
+                        <td>View Application</td>
+                        <td>Timestamp</td>
+                        <td>Status</td>
+                        <td>Rank</td>
+                    </thead>
+                    <tbody>
+                    {% for app in app_details %}
+                        {% if not app.0.pass_cgpa %}
+                        <tr>
+                        <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                        <td>{{app.0.preference}}</td>
+                        <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
+                        <td>{{app.0.timestamp}}</td>
+                        <td>{{app.0.status}}</td>
+                        <td>{{ app.1.as_p }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <table id="apps_rejected" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <td>User</td>
+                        <td>Preference</td>
+                        <td>View Application</td>
+                        <td>Timestamp</td>
+                        <td>Status</td>
+                        <td>Rank</td>
+                    </thead>
+                    <tbody>
+                    {% for app in app_details %}
+                        {% if app.0.status == 'rejected' and app.0.pass_cgpa %}
+                        <tr>
+                        <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                        <td>{{app.0.preference}}</td>
+                        <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
+                        <td>{{app.0.timestamp}}</td>
+                        <td>{{app.0.status}}</td>
+                        <td>{{ app.1.as_p }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    </table>
+
                         <div class="control-group">
                            <input type="submit" class="btn btn-primary" />
                            <a href="{{site_url}}" class="btn">Back</a>

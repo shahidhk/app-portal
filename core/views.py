@@ -166,12 +166,7 @@ def submissions(request,username=None,subdept_id=None):
     if subdept_id:
         AppFormSet = modelformset_factory(Application, form=SelectAppForm)
         subdept = SubDept.objects.get(id = subdept_id)
-        applications = Application.objects.filter(subdept = subdept)
-        qna = []
-        for app in applications:
-            answers   = app.answers.all()
-            questions = [ans.question for ans in answers]
-            qna.append(zip(questions,answers))
+        applications  = Application.objects.filter(subdept = subdept, preference__gte = 0)
         if request.method=="POST":
             appformset = AppFormSet(request.POST)
             for appform in appformset:
@@ -180,7 +175,7 @@ def submissions(request,username=None,subdept_id=None):
             saved = True
         else:
             appformset = AppFormSet(queryset=Application.objects.all())
-        app_details = zip(applications,qna,appformset)
+        app_details = zip(applications,appformset)
     else:
         return redirect('core.views.core_dashboard',username=request.user)
     return render_to_response("cores/submissions.html",locals(), context_instance=RequestContext(request))
