@@ -37,11 +37,7 @@ def login(request):
             if request.user.get_profile().is_core_of:
                 return redirect('core.views.core_dashboard',username=request.user)
             else:
-<<<<<<< HEAD
-                return HttpResponseRedirect(settings.SITE_URL + 'coord/home/')
-=======
                 return redirect('coord.views.coord_home')
->>>>>>> 98b380465a79ca9b96786550e7ead41ac5427da9
         else:
             login_form = LoginForm()
         return render_to_response('account/login.html', locals(), context_instance=RequestContext(request))
