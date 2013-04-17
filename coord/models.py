@@ -45,7 +45,7 @@ class Credential(models.Model):
     Add a key to user if you want credential
     details specifically.
     """
-    content = models.TextField()
+    content = models.TextField(blank=True)
 
     def __unicode__(self):
         return "%s..." % str(self.content[:10])
@@ -61,7 +61,7 @@ class Reference(models.Model):
     Add a key if you want user-specific
     references
     """
-    content = models.TextField()
+    content = models.TextField(blank=True)
 
     def __unicode__(self):
         return "%s..." % str(self.content[:10])

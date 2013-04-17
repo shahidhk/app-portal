@@ -171,7 +171,14 @@ def submissions(request,username=None,subdept_id=None):
             appformset = AppFormSet(request.POST)
             for appform in appformset:
                 if appform.is_valid():
-                    appform.save()
+                    app = appform.save()
+                    if app.rank > 0:
+                        app.status = 'accepted'
+                    elif app.rank == 0:
+                        app.status = 'rejected'
+                    else:
+                        app.status = 'pending'
+                    app.save()
             saved = True
         else:
             appformset = AppFormSet(queryset=Application.objects.filter(subdept=subdept))
@@ -199,7 +206,7 @@ def applications(request,username=None,app_id=None):
     Portal to view the details of a particular application
     """
     app = Application.objects.get(id=app_id)
-    if request.user.get_profile().is_core_of is not app.subdept.dept:
+    if request.user.get_profile().is_core_of != app.subdept.dept:
         return redirect('core.views.applicants', username=request.user, applicant = app.user)
     answers   = app.answers.all()
     questions = [ans.question for ans in answers]

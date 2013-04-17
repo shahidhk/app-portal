@@ -45,7 +45,7 @@ class Comments(models.Model):
     This helps the core during the interview.
     """
     answer  = models.ForeignKey(Answer)
-    comment = models.TextField()
+    comment = models.TextField(blank=True)
     
     def __unicode__(self):
         return str(self.comment)
@@ -56,7 +56,7 @@ class AppComments(models.Model):
     This serves as a useful feedback to the aspiring coordinator who can view this at the end of selection procedure.
     """
     app     = models.ForeignKey(Application,unique=True)
-    comment = models.TextField()
+    comment = models.TextField(blank=True)
     
     def __unicode__(self):
         return str(self.comment)

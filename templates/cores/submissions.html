@@ -24,7 +24,7 @@
                         <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
                         <td>{{app.0.timestamp}}</td>
                         <td>{{app.0.status}}</td>
-                        <td>{{ app.1.as_p }}</td>i
+                        <td>{{ app.1.as_p }}</td>
                         </tr>
                         {% endif %}
                     {% endfor %}
