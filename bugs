@@ -14,7 +14,6 @@ Bugs:
     Department name and user name on navbar
  Coord Dashboard:
     Username on navbar dropdown to edit profile and logout
-    in the dropdown change to "Dept - Subdept"
  Edit Question:
     Back button should go to questions and not dashboard!
     Delete question button to be present along with edit qiestion

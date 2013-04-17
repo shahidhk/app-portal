@@ -6,6 +6,18 @@ from django.contrib.auth.models import User
 from account.models import DEPT_CHOICES
 from core.models import SubDept, Question
 
+PREF_CHOICES =(
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+        ('5','5'),
+        ('6','6'),
+        ('7','7'),
+        ('8','8'),
+        ('9','9'),
+        ('10','10'),
+        )
 STATUS_CHOICES=(
         ('accepted','Accepted'),
         ('pending','Pending'),
@@ -17,7 +29,7 @@ class Answer(models.Model):
     Stores a textfield answer to each question.
     """
     question = models.ForeignKey(Question)
-    answer   = models.TextField(default = 'Enter Answer here')
+    answer   = models.TextField(default = 'Enter Answer here',blank = True)
 
     def __unicode__(self):
         return "%s..." % str(self.answer[:10])

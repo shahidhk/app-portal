@@ -10,7 +10,8 @@
               {% for a in apps %}
               <tr>
               <td class="span1">{{a.preference}}</td>
-              <td><a href = "{{site_url}}coord/application/{{a.subdept.id}}">{{a.subdept}}</a></td>                                                
+              <td><a href = "{{site_url}}coord/application/{{a.subdept.id}}">{{a.subdept}}</a></td>
+              <td><a href = "{{site_url}}coord/delete/{{a.subdept.id}}">Cancel application</a></td>                                                
               </tr>
               {% endfor %}
           </table>

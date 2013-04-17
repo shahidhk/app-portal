@@ -27,15 +27,18 @@ class ApplicationForm(forms.ModelForm):
         """
             This function validates whether the preference number is valid
         """
+        
         apps = Application.objects.filter(user = self.cleaned_data['user'], preference = self.cleaned_data['preference'])
         if len(apps):
-            if self in apps and len(apps) == 1:
-                raise forms.ValidationError('This preference is already used')
-            else:
-                pass
-        else:
+            for a in apps:
+                if a.subdept == self.cleaned_data['subdept']:
+                    return self.cleaned_data['preference']
+                else:
+                    pass    
+            raise forms.ValidationError('This preference is already used')
+        else:        
             return self.cleaned_data['preference']
-
+    
     
 class SelectSubDeptForm(forms.ModelForm):
     name = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.all())

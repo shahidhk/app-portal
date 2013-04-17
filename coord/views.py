@@ -28,14 +28,13 @@ def coord_home(request):
     """
     profile = UserProfile.objects.get(user__id = request.user.id)
     try:
-        apps = Application.objects.filter(user = request.user).order_by('preference')
+        apps = Application.objects.filter(user = request.user).exclude(preference = -1).order_by('preference')
     except:
         pass
     if request.method == "POST":
         form = SelectSubDeptForm(request.POST)
         if form.is_valid():
             name = str(form.cleaned_data['name']).split('| ')
-            print str(name[1])
             subdept = SubDept.objects.get(name = str(name[1]))
             return redirect('coord.views.application', sub_dept_id=subdept.id)
     form = SelectSubDeptForm()    
@@ -54,40 +53,35 @@ def application(request, sub_dept_id = None):
     number_of_questions = qns.count()
     #Create as many answer forms as there are questions
     try:
-        AnswerFormSet = modelformset_factory(Answer, form = AnswerForm)
+        AnswerFormSet = modelformset_factory(Answer, form = AnswerForm, extra = number_of_questions)
         a = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
         data = {'preference':a.preference,'references':a.references,'credentials' : a.credentials, 
                 'subdept':subdept,'user':request.user,}
-        answers = a.answers.all()
-        questions = [ans.question for ans in answers]
         if request.method == 'POST':
             #AnswerFormSet = modelformset_factory(Answer, form = AnswerForm)
             forms = AnswerFormSet(request.POST,queryset = a.answers.all())
             app = ApplicationForm(request.POST,data)
+            #print forms
             if forms.is_valid() and app.is_valid():
-                try:
-                    app_pref = Application.objects.get(preference = app.preference)
-                    if app_pref.id != app.id:
-                        return HttpResponse("You already have this preference number")    
-                except:
-                    n=0;
-                    forms = forms.save()
-                    ref = Reference.objects.get(id = a.references.id)
-                    ref.content = app.cleaned_data['references']
-                    ref.save()
-                    cred = Credential.objects.get(id = a.credentials.id) 
-                    cred.content = app.cleaned_data['credentials']
-                    cred.save()
-                    a.references = ref
-                    a.credentials = cred
-                    a.preference = app.cleaned_data['preference']
-                    a.save()
-                    msg = "You have successfully edited your application"
-                    return redirect('coord.views.coord_home')  
+                print "blah"
+                forms = forms.save()
+                print "saved"
+                ref = Reference.objects.get(id = a.references.id)
+                ref.content = app.cleaned_data['references']
+                ref.save()
+                cred = Credential.objects.get(id = a.credentials.id) 
+                cred.content = app.cleaned_data['credentials']
+                cred.save()
+                a.references = ref
+                a.credentials = cred
+                a.preference = app.cleaned_data['preference']
+                a.save()
+                msg = "You have successfully edited your application"
+                return redirect('coord.views.coord_home')  
         else:
             forms = AnswerFormSet(queryset = a.answers.all())
             app = ApplicationForm(initial = data)  
-            
+ 
     except:    
         AnswerFormSet = modelformset_factory(Answer, form = AnswerForm, extra = number_of_questions)
         if request.method == 'POST':
@@ -95,39 +89,43 @@ def application(request, sub_dept_id = None):
             app = ApplicationForm(request.POST)
             if forms.is_valid() and app.is_valid():
                 temp = app.save(commit = False)
-                try:
-                    app_pref = Application.objects.get(user = request.user, preference = temp.preference)  
-                    return HttpResponse("You already have this preference number")
-                except:
-                    forms = forms.save(commit = False)
-                    
-                    ref = Reference(content = app.cleaned_data['references'])
-                    ref.save()
-                    cred = Credential(content = app.cleaned_data['credentials']) 
-                    cred.save()
-                    temp.user = request.user
-                    temp.references = ref
-                    temp.credentials = cred
-                    temp.subdept = subdept 
-                    temp.save()
-                    curr = Application.objects.get(id = temp.id)
-                    n = 0
-                    for f in forms:
-                        f.question = qns[n]
-                        n=n+1
-                        f.save()
-                        ans = Answer.objects.get(id = f.id)                        
-                        curr.answers.add(ans)
-                        comment = Comments(answer = ans, comment = " ")
-                        comment.save()
-                    curr.save()
-                    appcomment = AppComments(app = curr, comment = " ")
-                    appcomment.save()
-                    msg = "You have successfully submitted your application"
-                    return redirect('coord.views.coord_home')  
+                forms = forms.save(commit = False)
+                ref = Reference(content = app.cleaned_data['references'])
+                ref.save()
+                cred = Credential(content = app.cleaned_data['credentials']) 
+                cred.save()
+                temp.user = request.user
+                temp.references = ref
+                temp.credentials = cred
+                temp.subdept = subdept 
+                temp.save()
+                curr = Application.objects.get(id = temp.id)
+                n = 0
+                for f in forms:
+                    f.question = qns[n]
+                    n=n+1
+                    f.save()
+                    ans = Answer.objects.get(id = f.id)                        
+                    curr.answers.add(ans)
+                    comment = Comments(answer = ans, comment = " ")
+                    comment.save()
+                curr.save()
+                appcomment = AppComments(app = curr, comment = " ")
+                appcomment.save()
+                msg = "You have successfully submitted your application"
+                return redirect('coord.views.coord_home')  
         else:  
             forms = AnswerFormSet(queryset = Answer.objects.none())
             app = ApplicationForm(initial={'subdept':subdept,'user':request.user,})
+
     zipped = zip(qns,forms)
     return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))                    
 
+@login_required
+@user_passes_test(lambda u: not u.get_profile().is_core_of)
+def delete(request, sub_dept_id = None):
+    subdept = SubDept.objects.get(id = sub_dept_id)
+    app = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
+    app.preference = -1
+    app.save()
+    return redirect('coord.views.coord_home') 
