@@ -1,6 +1,6 @@
 Bugs:
  Submit Application:
-    Edit not working (key cannot be null error)    
+    credentials and references full details should be displayed
     once submitted, submit button should disappear and the layout should change to view 
     application and an edit button should be present instead
  Applications:
