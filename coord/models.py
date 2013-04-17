@@ -28,7 +28,7 @@ class Answer(models.Model):
     """
     Stores a textfield answer to each question.
     """
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, null = True)
     answer   = models.TextField(default = 'Enter Answer here',blank = True)
 
     def __unicode__(self):

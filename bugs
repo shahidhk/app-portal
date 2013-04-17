@@ -1,6 +1,6 @@
 Bugs:
  Submit Application:
-    you already have this preference as a validation error!
+    Edit not working (key cannot be null error)    
     once submitted, submit button should disappear and the layout should change to view 
     application and an edit button should be present instead
  Applications:
