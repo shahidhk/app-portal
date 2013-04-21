@@ -49,6 +49,10 @@ def application(request, sub_dept_id = None):
     #TODO: Do no accept form if an answer is blank
     """
     subdept = SubDept.objects.get(id = sub_dept_id)
+    try:
+        inst = Instructions.objects.get(sub_dept = subdept)
+    except:
+        pass
     qns = Question.objects.filter(subdept__id = sub_dept_id).order_by('id')
     number_of_questions = qns.count()
     #Create as many answer forms as there are questions

@@ -5,6 +5,10 @@
         <h4> Please Save as often as possible. Your saved application will automatically be submitted.</h4>
 </center>
 </div>
+<div class = "well">
+    <h4>Instructions</h4>
+    {{inst}}
+</div>
 <form action="" method="POST">
     {%csrf_token%}
     {{ forms.management_form}}
