@@ -32,10 +32,10 @@ class Question(models.Model):
     question = models.TextField()
 
     def __unicode__(self):
-        return "%s..." % str(self.question[:10])
-    
-    def get_full_content(self):
         return str(self.question)
+        
+    def get_short_content(self):
+        return "%s..." % str(self.question[:10])
 
 from coord.models import Answer, Application
 
@@ -60,4 +60,14 @@ class AppComments(models.Model):
     
     def __unicode__(self):
         return str(self.comment)
+
+class Instructions(models.Model):
+    """
+    Stores Sub - Department specific instructions
+    """
+    sub_dept        = models.ForeignKey(SubDept,unique=True, null = True)
+    instructions    = models.TextField(blank = True)
+    
+    def __unicode__(self):
+        return str(self.instructions)
 
