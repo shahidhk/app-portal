@@ -196,7 +196,7 @@ def applicants(request,username=None,applicant=None):
     """
     applicant = User.objects.get(username=applicant)
     applicant_profile = applicant.get_profile()
-    applications = Application.objects.filter(user=applicant)
+    applications = Application.objects.filter(user=applicant).exclude(preference = -1)
     return render_to_response("cores/applicant.html",locals(), context_instance=RequestContext(request))
 
 @login_required
