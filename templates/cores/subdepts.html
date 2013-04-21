@@ -4,18 +4,21 @@
     {% if index %}
     <div class="span12 well alert-success">You have successfully created {{index}} new events.</div>
     {% endif %}
-    <h4>Add Sub Department</h4>
+    <u><center><h4>Add Sub Departments</h4></center></u>
     <form action='' method="POST">
-        <div class="span12">
             {{subdeptformset.management_form }}
             {% for form in subdeptformset %}
-            {{ form.as_table }}
-            <br>
-            {% endfor %}
+        <div class="span12 well">
+            {{ form.as_p }}
         </div>
-          <div class="control-group">
-             <input type="submit" class="btn btn-primary" />
-             <a href="{{site_url}}" class="btn">Back</a>
-          </div>
-</div>
-{%endblock%}
+        {% endfor %}
+    </div>
+<center>
+        <div class="control-group">
+            <input type="submit" value="Create Departments" class="btn btn-primary">
+            <a href="{{site_url}}" class="btn btn-inverse">Back</a>
+        </div>
+    </center>
+    </form>
+    </div>
+    {%endblock%}

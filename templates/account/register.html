@@ -15,21 +15,21 @@
                     	<ul class="nav">
                         	<li class=""><a href="{{site_url}}"><i class="icon-home icon-white"></i> Home</a></li>
                             <li class="active"><a href="{{site_url}}accounts/register"><i class="icon-user icon-white"></i> Register</a></li>
-                        </ul> 
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div id="content" class="container">
-        	<div class="row-fluid">     
+        	<div class="row-fluid">
                 <div class="span12 well" id="forms">
                      {% if invalid_login %}
 						<span style="color:#9d261d">Invalid Login!</span>
 					{% endif %}
                       <br/>
                       {% if registered %}
-                      <i class="icon-ok"></i> Registered Successfully!
-                      <a href="{{site_url}}">Proceed to Login</a>
+                      <h4><i class="icon-ok"></i> Registered Successfully!
+                          <a href="{{site_url}}">Proceed to Login</a></h4>
                       {% else %}
                       <h3>Register</h3>
                             <form action="" method="POST">
