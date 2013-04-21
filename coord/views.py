@@ -35,11 +35,11 @@ def coord_home(request):
         form = SelectSubDeptForm(request.POST)
         if form.is_valid():
             name = str(form.cleaned_data['name']).split('| ')
-            subdept = SubDept.objects.get(name = str(name[1]))
+            subdept = SubDept.objects.get(name = str(name[1]).strip())
             return redirect('coord.views.application', sub_dept_id=subdept.id)
-    form = SelectSubDeptForm()    
-    return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))    
-    
+    form = SelectSubDeptForm()
+    return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))
+
 @login_required
 @user_passes_test(lambda u: not u.get_profile().is_core_of)
 def application(request, sub_dept_id = None):
@@ -55,7 +55,7 @@ def application(request, sub_dept_id = None):
     try:
         AnswerFormSet = modelformset_factory(Answer, form = AnswerForm, extra = number_of_questions)
         a = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
-        data = {'preference':a.preference,'references':a.references,'credentials' : a.credentials, 
+        data = {'preference':a.preference,'references':a.references,'credentials' : a.credentials,
                 'subdept':subdept,'user':request.user,}
         if request.method == 'POST':
             #AnswerFormSet = modelformset_factory(Answer, form = AnswerForm)
@@ -69,7 +69,7 @@ def application(request, sub_dept_id = None):
                 ref = Reference.objects.get(id = a.references.id)
                 ref.content = app.cleaned_data['references']
                 ref.save()
-                cred = Credential.objects.get(id = a.credentials.id) 
+                cred = Credential.objects.get(id = a.credentials.id)
                 cred.content = app.cleaned_data['credentials']
                 cred.save()
                 a.references = ref
@@ -77,12 +77,12 @@ def application(request, sub_dept_id = None):
                 a.preference = app.cleaned_data['preference']
                 a.save()
                 msg = "You have successfully edited your application"
-                return redirect('coord.views.coord_home')  
+                return redirect('coord.views.coord_home')
         else:
             forms = AnswerFormSet(queryset = a.answers.all())
-            app = ApplicationForm(initial = data)  
- 
-    except:    
+            app = ApplicationForm(initial = data)
+
+    except:
         AnswerFormSet = modelformset_factory(Answer, form = AnswerForm, extra = number_of_questions)
         if request.method == 'POST':
             forms = AnswerFormSet(request.POST,initial=[{'answer':'default'}])
@@ -92,12 +92,12 @@ def application(request, sub_dept_id = None):
                 forms = forms.save(commit = False)
                 ref = Reference(content = app.cleaned_data['references'])
                 ref.save()
-                cred = Credential(content = app.cleaned_data['credentials']) 
+                cred = Credential(content = app.cleaned_data['credentials'])
                 cred.save()
                 temp.user = request.user
                 temp.references = ref
                 temp.credentials = cred
-                temp.subdept = subdept 
+                temp.subdept = subdept
                 temp.save()
                 curr = Application.objects.get(id = temp.id)
                 n = 0
@@ -105,7 +105,7 @@ def application(request, sub_dept_id = None):
                     f.question = qns[n]
                     n=n+1
                     f.save()
-                    ans = Answer.objects.get(id = f.id)                        
+                    ans = Answer.objects.get(id = f.id)
                     curr.answers.add(ans)
                     comment = Comments(answer = ans, comment = " ")
                     comment.save()
@@ -113,13 +113,13 @@ def application(request, sub_dept_id = None):
                 appcomment = AppComments(app = curr, comment = " ")
                 appcomment.save()
                 msg = "You have successfully submitted your application"
-                return redirect('coord.views.coord_home')  
-        else:  
+                return redirect('coord.views.coord_home')
+        else:
             forms = AnswerFormSet(queryset = Answer.objects.none())
             app = ApplicationForm(initial={'subdept':subdept,'user':request.user,})
 
     zipped = zip(qns,forms)
-    return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))                    
+    return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: not u.get_profile().is_core_of)
@@ -128,4 +128,4 @@ def delete(request, sub_dept_id = None):
     app = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
     app.preference = -1
     app.save()
-    return redirect('coord.views.coord_home') 
+    return redirect('coord.views.coord_home')
