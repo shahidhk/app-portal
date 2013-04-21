@@ -6,11 +6,13 @@
 <table class="span4 offset4 table table-bordered table-striped table-hover">
     <th> Departments </th><th>Submissions</h>
         {% for dept in subdepts %}
-        <tr><td>{{dept}}<br><a href="{% url core.views.questions username=user subdept_id=dept.id %}"><small>(Questions)</small></a> <a href="{% url core.views.subdepartments_edit username=user subdept_id=dept.id %}"><small>(Edit)</small></a></td><td><a href="{% url core.views.submissions username=user subdept_id=dept.id %}">View</a></td></tr>
+        <tr><td>{{dept}}<br><a href="{% url core.views.questions username=user subdept_id=dept.id %}"><small>(Questions)</small></a> <a href="{% url core.views.subdepartments_edit username=user subdept_id=dept.id %}"><small>(Edit)</small></a></td><td><a href="{% url core.views.submissions username=user subdept_id=dept.id %}">View</a></td><td><a href="{% url core.views.add_instructions username=user subdept_id=dept.id %}">Add Instructions</a></td></tr>
         {% endfor %}
     </table>
     <div class="span8 offset4">
         <a class="btn btn-info" href="{% url core.views.questions_all username=user %}"> Add questions for multiple departments </a>
+        <br><br>
+        <a class="btn btn-info" href="{% url core.views.instructions_all username=user %}"> Add instructions for multiple departments </a>
         <br><br>
         <a class="btn btn-inverse" href="{% url core.views.subdepartments username=user %}"> New Department </a>
 </div>

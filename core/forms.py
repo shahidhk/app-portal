@@ -71,3 +71,11 @@ class AppCommentsForm(forms.ModelForm):
         fields  = ('app','comment')
         widgets = {'app': forms.HiddenInput(),}
 
+class InstructionsForm(forms.ModelForm):
+    """
+    Model Form for the core to add instructions to a sub department
+    """
+    class Meta:
+        model   = Instructions
+        exclude = ('sub_dept')
+

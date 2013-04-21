@@ -239,3 +239,45 @@ def cgpa_filter(request,username=None,subdept_id=None,default=7.0):
             app.rank=-1
             app.save()
     return redirect('core.views.submissions',username=request.user,subdept_id=subdept_id)
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def add_instructions(request, username = None,subdept_id = None):
+    subdept=SubDept.objects.get(id=subdept_id)
+    try:
+        instr = Instructions.objects.get(sub_dept = subdept)
+        form = InstructionsForm(instance = instr)
+        if request.method == 'POST':
+            form = InstructionsForm(request.POST,instance = instr)
+            if form.is_valid():
+                f = form.save() 
+                return redirect('core.views.core_dashboard',username=request.user)  
+    except:
+        form = InstructionsForm()
+        if request.method == 'POST':
+            form = InstructionsForm(request.POST)
+            if form.is_valid():
+                f = form.save(commit = False) 
+                f.sub_dept = subdept 
+                f.save()
+                return redirect('core.views.core_dashboard',username=request.user)  
+    return render_to_response("cores/instructions.html",locals(), context_instance=RequestContext(request))    
+
+@login_required
+@user_passes_test(lambda u: u.get_profile().is_core_of)
+def instructions_all(request,username=None):
+    subdepts=SubDept.objects.filter(dept=request.user.get_profile().is_core_of)
+    if request.method=="POST":
+        index=0;
+        add_to=request.POST.getlist('subdepartments')
+        for x in add_to:
+            instruction=InstructionsForm(request.POST)
+            if instruction.is_valid:
+                i=instruction.save(commit=False)
+                i.sub_dept=SubDept.objects.get(id=x)
+                i.save()
+                index+=1
+            else:
+                break
+    i=InstructionsForm()
+    return render_to_response("cores/instructions_all.html",locals(),context_instance=RequestContext(request))
