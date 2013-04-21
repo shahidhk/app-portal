@@ -89,7 +89,13 @@ def application(request, sub_dept_id = None):
     except:
         AnswerFormSet = modelformset_factory(Answer, form = AnswerForm, extra = number_of_questions)
         if request.method == 'POST':
-            forms = AnswerFormSet(request.POST,initial=[{'answer':'default'}])
+            n = 0
+            initial_list = []
+            data = 'Enter answer here'
+            while n != number_of_questions:
+                initial_list.append({'answer':data})
+                n = n+1
+            forms = AnswerFormSet(request.POST,initial=initial_list)
             app = ApplicationForm(request.POST)
             if forms.is_valid() and app.is_valid():
                 temp = app.save(commit = False)

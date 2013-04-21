@@ -16,7 +16,7 @@
               <tr>
               <td class="span1">{{a.preference}}</td>
               <td><a href = "{{site_url}}coord/application/{{a.subdept.id}}">{{a.subdept}}</a></td>
-              <td><a Onclick="return confirm('Are you sure you want to delete your application? All saved data will be lost.')" href = "{{site_url}}coord/delete/{{a.subdept.id}}">Cancel application</a></td>
+              <td><a Onclick="return confirm('If you ever want to resubmit for this sub department, please select the sub department ->view application and change the preference number to a positive number.')" href = "{{site_url}}coord/delete/{{a.subdept.id}}">Cancel application</a></td>
               </tr>
               {% endfor %}
           </table>

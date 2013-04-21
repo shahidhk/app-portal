@@ -27,7 +27,8 @@
                 <li>Please enter the preference number of your application. <li>It is compusory to mention contact details of references.</ul>
         </font>
     </div>
-    <ul>
+    {{ app.as_table}}
+    <!--<ul>
         {% for field in app.visible_fields %}
         <li><h5>{{field.label}}</h5>
         {{ field }}
@@ -35,7 +36,7 @@
         {% for field in app.hidden_fields %}
         {{field}}
         {% endfor %}
-    </ul>
+    </ul>-->
 
     <center><input type="submit" value="Save" class="btn btn-large btn-primary"/>
         <a href="{{site_url}}" class="btn">Back</a></center>
