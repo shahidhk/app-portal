@@ -7,7 +7,7 @@
 </div>
 <div class = "well">
     <h4>Instructions</h4>
-    {{inst}}
+    {{inst|safe}}
 </div>
 <form action="" method="POST">
     {%csrf_token%}
@@ -15,7 +15,7 @@
     <div class="alert alert-info"><center> <h5><font color='black'><u>Aptitude and Competence Questionnaire:</u></font></h5></center></div>
     <ol>
         {% for q in zipped %}
-        <h5><li><p><strong>{{q.0.question}}</strong></p></h5>
+        <h5><li><p><strong>{{q.0.question|safe}}</strong></p></h5>
         {{q.1}}</li>
         <!--<p>{{q.question}}</p>
         {{f.as_table}}-->
