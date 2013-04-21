@@ -1,16 +1,29 @@
 {% extends "coord/base.html" %}
 {% block content %}
-<div class="well"><center><h4> Please Save as often as possible. Your saved application will automatically be submitted.</h4></center></div>
-<form action="" method="POST">
-        {%csrf_token%}
-        {{ forms.management_form}}
-        <div class="alert alert-block"><center> <h5><font color='black'><u>Personal Details</u></h5>
-        </center>
-        <ul>
-            <li>Please enter the preference number of your application. <li>It is compusory to mention contact details of references.</ul>
-    </font>
+<div class="well">
+    <center>
+        <h4> Please Save as often as possible. Your saved application will automatically be submitted.</h4>
+</center>
 </div>
-        <ul>
+<form action="" method="POST">
+    {%csrf_token%}
+    {{ forms.management_form}}
+    <div class="alert alert-info"><center> <h5><font color='black'><u>Aptitude and Competence Questionnaire:</u></font></h5></center></div>
+    <ol>
+        {% for q in zipped %}
+        <h5><li><p><strong>{{q.0.question}}</strong></p></h5>
+        {{q.1}}</li>
+        <!--<p>{{q.question}}</p>
+        {{f.as_table}}-->
+        {% endfor %}
+    </ol>
+    <div class="alert alert-block"><center> <h5><font color='black'><u>Personal Details</u></h5>
+            </center>
+            <ul>
+                <li>Please enter the preference number of your application. <li>It is compusory to mention contact details of references.</ul>
+        </font>
+    </div>
+    <ul>
         {% for field in app.visible_fields %}
         <li><h5>{{field.label}}</h5>
         {{ field }}
@@ -19,16 +32,8 @@
         {{field}}
         {% endfor %}
     </ul>
-        <div class="alert alert-info"><center> <h5><font color='black'><u>Aptitude and Competence Questionnaire:</u></font></h5></center></div>
-        <ol>
-        {% for q in zipped %}
-       <h5><li><p><strong>{{q.0.question}}</strong></p></h5>
-            {{q.1}}</li>
-            <!--<p>{{q.question}}</p>
-            {{f.as_table}}-->
-        {% endfor %}
-        </ol>
-        <center><input type="submit" value="Save" class="btn btn-large btn-primary"/>
+
+    <center><input type="submit" value="Save" class="btn btn-large btn-primary"/>
         <a href="{{site_url}}" class="btn">Back</a></center>
 </form>
 {% endblock %}
