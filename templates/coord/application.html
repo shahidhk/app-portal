@@ -7,7 +7,9 @@
 </div>
 <div class = "well">
     <h4>Instructions</h4>
-    {{inst|safe}}
+    {% autoescape off %}
+    {{inst}}
+    {%endautoescape%} 
 </div>
 <form action="" method="POST">
     {%csrf_token%}
