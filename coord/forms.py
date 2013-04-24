@@ -41,7 +41,7 @@ class ApplicationForm(forms.ModelForm):
     
     
 class SelectSubDeptForm(forms.ModelForm):
-    name = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.all())
+    name = chosenforms.ChosenModelChoiceField(queryset=SubDept.objects.all().order_by('dept'))
     class Meta:
         model  = SubDept
         fields = {'name'}

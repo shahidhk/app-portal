@@ -6,10 +6,10 @@
 </center>
 </div>
 <div class = "well">
-    <h4>Instructions</h4>
-    {% autoescape off %}
-    {{inst}}
-    {%endautoescape%} 
+{% if inst %}    
+    <h4><u>Instructions</u></h4>
+    {{inst|safe}}
+{% endif %}
 </div>
 <form action="" method="POST">
     {%csrf_token%}
