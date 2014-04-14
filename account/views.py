@@ -71,7 +71,9 @@ def register(request):
                                           room_no = data['room_no'],
                                           hostel  = data['hostel'],
                                           cgpa    = data['cgpa'],
-                                          ph_no   = data['ph_no'],)
+                                          ph_no   = data['ph_no'],
+                                          city    = data['city'],
+                                          summer_location = data['summer_location'],)
                 new_profile.save()
                 registered = True
         else:

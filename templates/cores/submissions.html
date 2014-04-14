@@ -22,13 +22,14 @@ All changes saved successfully
             {% for app in app_details %}
             {% if app.0.status == 'accepted' and app.0.pass_cgpa %}
             <tr class="success">
-                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user.first_name}} {{app.0.user.last_name}}</a></td>
                 <td>{{app.0.preference}}</td>
                 <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
                 <td>{{app.0.timestamp}}</td>
                 <td>{{app.0.status}}</td>
                 <td>{{ app.1.as_p }}</td>
             </tr>
+            {{ app.hidden_fields }}            
             {% endif %}
             {% endfor %}
         </tbody>
@@ -49,13 +50,14 @@ All changes saved successfully
             {% for app in app_details %}
             {% if app.0.status == 'pending' and app.0.pass_cgpa %}
             <tr class="info">
-                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user.first_name}} {{app.0.user.last_name}}</a></td>
                 <td>{{app.0.preference}}</td>
                 <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
                 <td>{{app.0.timestamp}}</td>
                 <td>{{app.0.status}}</td>
                 <td>{{ app.1.as_p }}</td>
             </tr>
+            {{ app.hidden_fields }}            
             {% endif %}
             {% endfor %}
         </tbody>
@@ -77,13 +79,14 @@ All changes saved successfully
             {% for app in app_details %}
             {% if app.0.status == 'rejected' and app.0.pass_cgpa %}
             <tr class="error">
-                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user.first_name}} {{app.0.user.last_name}}</a></td>
                 <td>{{app.0.preference}}</td>
                 <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
                 <td>{{app.0.timestamp}}</td>
                 <td>{{app.0.status}}</td>
                 <td>{{ app.1.as_p }}</td>
             </tr>
+            {{ app.hidden_fields }}            
             {% endif %}
             {% endfor %}
         </tbody>
@@ -105,13 +108,15 @@ All changes saved successfully
             {% for app in app_details %}
             {% if not app.0.pass_cgpa %}
             <tr class="warning">
-                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user}}</a></td>
+                <td><a href="{% url core.views.applicants username=request.user applicant=app.0.user %}">{{app.0.user.first_name}} {{app.0.user.last_name}}</a></td>
                 <td>{{app.0.preference}}</td>
                 <td><a href="{% url core.views.applications username=request.user app_id=app.0.id %}">View Application</a></td>
                 <td>{{app.0.timestamp}}</td>
                 <td>{{app.0.status}}</td>
                 <td>{{ app.1.as_p }}</td>
             </tr>
+            
+            {{ app.hidden_fields }}            
             {% endif %}
             {% endfor %}
         </tbody>

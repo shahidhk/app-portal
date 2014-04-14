@@ -18,7 +18,7 @@
     <ol>
         {% for q in zipped %}
         <h5><li><p><strong>{{q.0.question|safe}}</strong></p></h5>
-        {{q.1}}</li>
+        {{q.1|safe}}</li>
         <!--<p>{{q.question}}</p>
         {{f.as_table}}-->
         {% endfor %}
@@ -26,7 +26,10 @@
     <div class="alert alert-block"><center> <h5><font color='black'><u>Personal Details</u></h5>
             </center>
             <ul>
-                <li>Please enter the preference number of your application. <li>It is compusory to mention contact details of references.</ul>
+                <li>Please enter the preference number of your application. 
+                <li>It is compusory to mention contact details of references.
+                <li><u><strong> NOTE: </strong> Your application will not save if you leave the Credentials and References fields blank.</u>
+                </ul>
         </font>
     </div>
     {{ app.as_table}}
