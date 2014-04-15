@@ -31,6 +31,7 @@ def coord_home(request):
         apps = Application.objects.filter(user = request.user).exclude(preference = -1).order_by('preference')
     except:
         pass
+    form = SelectSubDeptForm()
     if request.method == "POST":
         form = SelectSubDeptForm(request.POST)
         if form.is_valid():
@@ -40,7 +41,9 @@ def coord_home(request):
             if subdept.name in names:
 #            if subdept.id == 47 or subdept.id == 48:
                 return redirect('coord.views.application', sub_dept_id=subdept.id)
-    form = SelectSubDeptForm()
+        else:
+            rr
+#    form = SelectSubDeptForm()
     return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))
 
 @login_required
