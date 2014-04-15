@@ -38,12 +38,10 @@ def coord_home(request):
             name = str(form.cleaned_data['name']).split('| ')
             subdept = SubDept.objects.get(name = str(name[1]).strip())
             names=['Hovercraft Making Workshop','Desmod','How Things Work', 'Gamedrome', 'Industrially Defined Problem Statement (IDP)','Shaastra Junior','Sustainable Cityscape', 'Project X']	
-            if subdept.name in names:
-#            if subdept.id == 47 or subdept.id == 48:
-                return redirect('coord.views.application', sub_dept_id=subdept.id)
+            #if subdept.name in names:
+            return redirect('coord.views.application', sub_dept_id=subdept.id)
         else:
-            rr
-#    form = SelectSubDeptForm()
+            print "Form in invalid"
     return render_to_response("coord/home.html", locals(),context_instance=RequestContext(request))
 
 @login_required
