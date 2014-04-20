@@ -4,6 +4,10 @@
 {% if saved %}
 All changes saved successfully
 {% endif %}
+<script type="text/javascript" src="{{site_url}}static/js/sortable.js"></script>
+<script type="text/javascript" src="{{site_url}}static/js/moment.js"></script>
+<link rel="stylesheet" href="{{site_url}}static/css/sortable.css"  />
+
 <form action="" method="POST">
     {{ appformset.management_form }}
     <div class="alert alert-success">
@@ -11,12 +15,14 @@ All changes saved successfully
     </div>
     <table id="apps_accepted" class="table table-bordered table-striped table-hover">
         <thead>
-            <td>User</td>
-            <td>Preference</td>
-            <td>View Application</td>
-            <td>Timestamp</td>
-            <td>Status</td>
-            <td>Rank</td>
+            <tr>
+            <th>User</th>
+            <th>Preference</th>
+            <th>View Application</th>
+            <th data-defaultsort="desc">Timestamp</th>
+            <th>Status</th>
+            <th>Rank</th>
+            </tr>
         </thead>
         <tbody>
             {% for app in app_details %}
@@ -39,12 +45,14 @@ All changes saved successfully
     </div>
     <table id="apps_pending" class="table table-bordered table-striped table-hover">
         <thead>
-            <td>User</td>
-            <td>Preference</td>
-            <td>View Application</td>
-            <td>Timestamp</td>
-            <td>Status</td>
-            <td>Rank</td>
+            <tr>
+            <th>User</th>
+            <th>Preference</th>
+            <th>View Application</th>
+            <th data-defaultsort="desc">Timestamp</th>
+            <th>Status</th>
+            <th>Rank</th>
+            </tr>
         </thead>
         <tbody>
             {% for app in app_details %}
@@ -68,12 +76,14 @@ All changes saved successfully
     </div>
     <table id="apps_rejected" class="table table-bordered table-striped table-hover">
         <thead>
-            <td>User</td>
-            <td>Preference</td>
-            <td>View Application</td>
-            <td>Timestamp</td>
-            <td>Status</td>
-            <td>Rank</td>
+            <tr>
+            <th>User</th>
+            <th>Preference</th>
+            <th>View Application</th>
+            <th data-defaultsort="desc">Timestamp</th>
+            <th>Status</th>
+            <th>Rank</th>
+            </tr>
         </thead>
         <tbody>
             {% for app in app_details %}
@@ -97,12 +107,14 @@ All changes saved successfully
 
     <table id="apps_cgpa" class="table table-bordered table-striped table-hover">
         <thead>
-            <td>User</td>
-            <td>Preference</td>
-            <td>View Application</td>
-            <td>Timestamp</td>
-            <td>Status</td>
-            <td>Rank</td>
+            <tr>
+            <th>User</th>
+            <th>Preference</th>
+            <th>View Application</th>
+            <th data-defaultsort="desc">Timestamp</th>
+            <th>Status</th>
+            <th>Rank</th>
+            </tr>
         </thead>
         <tbody>
             {% for app in app_details %}
@@ -121,6 +133,15 @@ All changes saved successfully
             {% endfor %}
         </tbody>
     </table>
+    <script>    
+        (function () {
+            var $table = $('table');
+            $table.addClass("sortable")
+            $table.on('sorted', function () {});
+        }());
+    
+    </script>
+
     <div class="control-group">
         <input type="submit" class="btn btn-primary" />
         <a href="{{site_url}}" class="btn">Back</a>
