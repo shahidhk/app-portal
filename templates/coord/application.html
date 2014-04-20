@@ -4,13 +4,19 @@
     <center>
         <h4> Please Save as often as possible. Your saved application will automatically be submitted.</h4>
 </center>
+{% if app.errors %}
+            Errors found : <br />
+            {{ app.errors}}
+        {% endif %}
 </div>
-<div class = "well">
 {% if inst %}    
+<div class = "well">
+
     <h4><u>Instructions</u></h4>
     {{inst|safe}}
-{% endif %}
 </div>
+{% endif %}
+
 <form action="" method="POST">
     {%csrf_token%}
     {{ forms.management_form}}
@@ -33,6 +39,7 @@
         </font>
     </div>
     {{ app.as_table}}
+    {{ app.errors }}
     <!--<ul>
         {% for field in app.visible_fields %}
         <li><h5>{{field.label}}</h5>
