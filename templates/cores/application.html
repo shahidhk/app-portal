@@ -15,6 +15,14 @@
         <li><strong>References:</strong> <p>{{app.references}}</p></li>
         <li><strong>Time:</strong> {{app.timestamp}} </li>
     </ul>
+
+    {% if app.app_file %}
+    <br/>
+    <p>
+    Download submitted <a href="{{MEDIA_URL}}{{app.app_file}}" target="_blank">app</a>
+    </p>
+    {% endif %}
+
     <form action="" method="POST">
         {{appcommentsform.as_table}}<hr>
         {{ commentsformset.management_form }}

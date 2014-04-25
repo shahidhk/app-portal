@@ -19,7 +19,7 @@ class ApplicationForm(forms.ModelForm):
     references = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
     class Meta:
         model = Application
-        fields = {'preference','subdept','user'}
+        fields = {'preference','subdept','user',}
         widgets = {'subdept': forms.HiddenInput(),
                    'user'   : forms.HiddenInput(),}
     
@@ -57,3 +57,11 @@ class ReferencesForm(forms.ModelForm):
         model   = Reference
         widgets = {'content': forms.Textarea(attrs={'cols': 80, 'rows': 20}),}
 
+class AppUploadForm(forms.ModelForm):
+    # credentials = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
+    # references = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}))
+    class Meta:
+        model = Application
+        fields = {'preference','subdept','user', 'app_file'}
+        widgets = {'subdept': forms.HiddenInput(),
+                   'user'   : forms.HiddenInput(),}

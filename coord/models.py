@@ -70,13 +70,14 @@ class Application(models.Model):
     subdept     = models.ForeignKey(SubDept)
     answers     = models.ManyToManyField(Answer)
     preference  = models.IntegerField(default=1)
-    credentials = models.ForeignKey(Credential)
-    references  = models.ForeignKey(Reference)
+    credentials = models.ForeignKey(Credential, blank=True, null=True)
+    references  = models.ForeignKey(Reference, blank=True, null=True)
     lockstatus  = models.BooleanField(default=False)
     timestamp   = models.DateTimeField(auto_now=True, editable=False)
     rank    = models.IntegerField(default=-1) # This field determines if the core has selected the application and the priority assigned
     status = models.CharField(max_length='10',choices=STATUS_CHOICES,default='pending')
-    
+    app_file = models.FileField(upload_to="apps", blank=True, null=True)
+
     def pass_cgpa(self):
         if self.user.get_profile().cgpa >7.0:
             return True

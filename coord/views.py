@@ -37,8 +37,10 @@ def coord_home(request):
         if form.is_valid():
             name = str(form.cleaned_data['name']).split('| ')
             subdept = SubDept.objects.get(name = str(name[1]).strip())
-            names=['Hovercraft Making Workshop','Desmod','How Things Work', 'Gamedrome', 'Industrially Defined Problem Statement (IDP)','Shaastra Junior','Sustainable Cityscape', 'Project X']	
+            names=['Hovercraft Making Workshop','Desmod','How Things Work', 'Gamedrome', 'Industrially Defined Problem Statement (IDP)','Saarang Junior','Sustainable Cityscape', 'Project X']	
             #if subdept.name in names:
+            if subdept.file_upload:
+                return redirect('coord.views.upload_app', sub_dept_id=subdept.id)
             return redirect('coord.views.application', sub_dept_id=subdept.id)
         else:
             print "Form in invalid"
@@ -143,3 +145,46 @@ def delete(request, sub_dept_id = None):
     app.preference = -1
     app.save()
     return redirect('coord.views.coord_home')
+
+@login_required
+@user_passes_test(lambda u: not u.get_profile().is_core_of)
+def upload_app(request, sub_dept_id = None):
+    print "upload_app--------------------"
+    subdept = SubDept.objects.get(id = sub_dept_id)
+    try:
+        inst = Instructions.objects.get(sub_dept = subdept)
+    except:
+        pass
+    try:
+        a = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
+        data = {'preference':a.preference,'references':a.references,'credentials' : a.credentials,
+                'subdept':subdept,'user':request.user,}
+    except:
+        a=None
+        data = {'subdept':subdept,'user':request.user,}
+    
+    if a:
+        app = AppUploadForm(instance=a)
+    else:
+        app = AppUploadForm(initial=data)
+    
+    if request.method == "POST":
+        if subdept.close_apps:
+            msg = "Applications have been closed"
+            return redirect('coord.views.coord_home')
+        if a:
+            app_form = AppUploadForm(request.POST, request.FILES, instance=a)
+        else:
+            app_form = AppUploadForm(request.POST, request.FILES, data)
+        if app_form.is_valid():
+            new_app=app_form.save()
+            # new_app = Application.objects.get(user = request.user, subdept__id = sub_dept_id)
+            try:
+                AppComments.objects.get(app=new_app)
+            except AppComments.DoesNotExist:
+                AppComments.objects.create(app=new_app)
+        msg = "You have successfully submitted your application"
+        return redirect('coord.views.coord_home')
+
+    upload_app = True
+    return render_to_response("coord/application.html", locals(),context_instance=RequestContext(request))

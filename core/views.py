@@ -247,14 +247,14 @@ def add_instructions(request, username = None,subdept_id = None):
         instr = Instructions.objects.get(sub_dept = subdept)
         form = InstructionsForm(instance = instr)
         if request.method == 'POST':
-            form = InstructionsForm(request.POST,instance = instr)
+            form = InstructionsForm(request.POST, request.FILES,instance = instr)
             if form.is_valid():
                 f = form.save() 
                 return redirect('core.views.core_dashboard',username=request.user)  
-    except:
+    except Exception, e:
         form = InstructionsForm()
         if request.method == 'POST':
-            form = InstructionsForm(request.POST)
+            form = InstructionsForm(request.POST, request.FILES)
             if form.is_valid():
                 f = form.save(commit = False) 
                 f.sub_dept = subdept 

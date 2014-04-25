@@ -13,7 +13,7 @@ class SubDeptManager(models.Manager):
 
 class SubDept(models.Model):
     """
-      Each department under Shaastra has sub-departments.
+      Each department under Saarang has sub-departments.
       Example: Design is a Department whereas Graphic Design, Photography etc are sub-departments
 
     """
@@ -21,7 +21,7 @@ class SubDept(models.Model):
     name        = models.CharField(max_length = 1000)
     impose_cgpa = models.BooleanField(default = True, help_text="This does not work, don't bother")
     close_apps  = models.BooleanField(default = False, help_text="Decides whether coord aspirants can apply for the Subdept or not")
-
+    file_upload = models.BooleanField(default=False, help_text="Check this if you want aspirant to submit a PDF app for this SubDepartment.")
     objects = SubDeptManager()
 
     def __unicode__(self):
@@ -76,6 +76,8 @@ class Instructions(models.Model):
     """
     sub_dept        = models.ForeignKey(SubDept,unique=True, null = True)
     instructions    = models.TextField(blank = True)
+    question_file   = models.FileField(upload_to='qs', blank=True, null=True)
+
     
     def __unicode__(self):
         return str(self.instructions)

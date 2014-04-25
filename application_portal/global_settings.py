@@ -17,11 +17,11 @@ MANAGERS = ADMINS
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Kolkata'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-IN'
 
 SITE_ID = 1
 
@@ -36,7 +36,7 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-SITE_URL = "/"
+SITE_URL = "http://localhost:8000"
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -106,6 +106,7 @@ INSTALLED_APPS = (
     'account',
     'coord',
     'core',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

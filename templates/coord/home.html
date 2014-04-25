@@ -19,7 +19,7 @@
         {% for a in apps %}
         <tr>
             <td class="span1">{{a.preference}}</td>
-            <td><a href="{{site_url}}coord/application/{{a.subdept.id}}">{{a.subdept}}</a>
+            <td><a href="{% if not a.subdept.file_upload %}{{site_url}}coord/application/{{a.subdept.id}}{% else %}{{site_url}}coord/upload/{{a.subdept.id}}{% endif %}">{{a.subdept}}</a>
             </td>
             <td><a Onclick="return confirm('If you ever want to resubmit for this sub department, please select the sub department ->view application and change the preference number to a positive number.')" href="{{site_url}}coord/delete/{{a.subdept.id}}">Cancel application</a>
             </td>

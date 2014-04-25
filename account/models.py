@@ -29,13 +29,12 @@ HOSTEL_CHOICES = (
 DEPT_CHOICES = (
     ('Design','Design'),
     ('Events','Events'),
-    ('Evolve','Evolve'),
     ('Facilities','Facilities'),
     ('Finance','Finance'),
     ('QMS','QMS'),
-    ('Shows','Shows'),
+    ('Publicity','Publicity'),
     ('Sponsorship and PR','Sponsorship and PR'),
-    ('Student Relations','Student Relations'),
+    ('Marketing and Ticket Sales','Marketing and Ticket Sales'),
     ('Webops','Webops'),    
 )
 class UserProfile(models.Model):

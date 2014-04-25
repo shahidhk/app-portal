@@ -1,4 +1,5 @@
 {% extends "coord/base.html" %}
+{% load url from future %}
 {% block content %}
 <div class="well">
     <center>
@@ -14,12 +15,21 @@
 
     <h4><u>Instructions</u></h4>
     {{inst|safe}}
+    {% if inst.question_file %}
+    <br/>
+    <p>
+    To download the questions, Click <a href="{{MEDIA_URL}}{{inst.question_file}}" target="_blank">here</a>
+    </p>
+    {% endif %}
+
 </div>
 {% endif %}
 
+{% if not upload_app %}
 <form action="" method="POST">
     {%csrf_token%}
     {{ forms.management_form}}
+
     <div class="alert alert-info"><center> <h5><font color='black'><u>Aptitude and Competence Questionnaire:</u></font></h5></center></div>
     <ol>
         {% for q in zipped %}
@@ -53,5 +63,13 @@
     <center><input type="submit" value="Save" class="btn btn-large btn-primary"/>
         <a href="{{site_url}}" class="btn">Back</a></center>
 </form>
+{% elif upload_app %}
+<form action="{% url 'upload_app' subdept.pk %}" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{app.as_table}}
+<center><input type="submit" value="Save" class="btn btn-large btn-primary"/>
+        <a href="{{site_url}}" class="btn">Back</a></center>
+</form>
+{% endif %}
 {% endblock %}
 
